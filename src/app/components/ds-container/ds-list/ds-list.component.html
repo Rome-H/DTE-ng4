@@ -1,0 +1,9 @@
+<div class="container">
+  <div class='container'[dragula]='"another-bag"' [dragulaModel]='itemsDropped'>
+    <div class="dropItem" *ngFor='let text of itemsDropped'>
+      {{text.name}}
+      <input type="text">
+    </div>
+  </div>
+</div>
+

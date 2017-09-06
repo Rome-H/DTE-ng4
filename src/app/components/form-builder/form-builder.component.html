@@ -1,0 +1,5 @@
+<div>
+  <div class='ul' [dragula]='"another-bag"' [dragulaModel]='itemsToDrop' [dragulaOptions]="options">
+    <div class='li' id="a" *ngFor='let text of itemsToDrop' [innerHtml]='text.name'></div>
+  </div>
+</div>
