@@ -12,6 +12,9 @@ import { DsContainerComponent } from './components/ds-container/ds-container.com
 import { DsListComponent } from './components/ds-container/ds-list/ds-list.component';
 import { DsItemComponent } from './components/ds-container/ds-item/ds-item.component';
 
+// App internal services
+import { DataTableService } from './services/data-table/data-table.service';
+
 
 
 @NgModule({
@@ -27,7 +30,7 @@ import { DsItemComponent } from './components/ds-container/ds-item/ds-item.compo
     BrowserModule,
     DragulaModule
   ],
-  providers: [],
+  providers: [DataTableService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
