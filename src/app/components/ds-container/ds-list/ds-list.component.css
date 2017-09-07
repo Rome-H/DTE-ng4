@@ -1,10 +1,10 @@
-.container{
+.container {
   width: 450px;
   height: 700px;
   border: solid 1px grey;
   background-color: white;
 }
-.dropItem{
+.dropItem {
   display:inline-block;
   padding:2px 4px;
   margin:4px;
@@ -13,7 +13,7 @@
   width: 350px;
   height: 100px;
 }
-input{
+input {
   margin-left: 50px;
   width: 200px;
   height: 30px;

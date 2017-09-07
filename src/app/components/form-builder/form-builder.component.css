@@ -1,17 +1,17 @@
-.li{
+.li {
   left: 0;
   width: 90px;
   height: 50px;
   text-align: center;
   border: solid 1px black;
 }
-.ul{
+.ul {
   position: relative;
   list-style: none;
   padding: 0;
   margin: 0;
 }
-div{
+div {
   height: 100%;
   width: 100px;
   float: left;
@@ -21,9 +21,4 @@ div{
   cursor: grab;
   cursor: -moz-grab;
   cursor: -webkit-grab;
-}
-.gu-mirror {
-  cursor: grabbing;
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
 }

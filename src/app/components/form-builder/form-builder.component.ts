@@ -7,7 +7,8 @@ import {DragulaService} from 'ng2-dragula';
   styleUrls: ['./form-builder.component.css']
 })
 export class FormBuilderComponent implements OnInit {
-  public itemsToDrop: Array<Object> = [ // array of items to drag
+  // array of items to drag
+  public itemsToDrop: Array<Object> = [
     {name: 'Text'},
     {name: 'Long Text'},
     {name: 'Numbers'},
@@ -16,14 +17,18 @@ export class FormBuilderComponent implements OnInit {
     {name: 'Date'},
     {name: 'Time'},
     {name: 'Yes/No'}
-  ]
+  ];
+
   constructor(private dragulaService: DragulaService) {
-    dragulaService.setOptions('another-bag', {
-      removeOnSpill: true, // remove div when dragged of the container
-      copy: function (el, source) {  // copying the forms from form-builder
+    dragulaService.setOptions('form-builder-dnd', {
+      // remove div when dragged off the container
+      removeOnSpill: true,
+      // copy the dragged items into drop model -
+      // which prevents them from being removed from the left panel
+      copy: function (el, source) {
         return source.className.indexOf('can_move') !== -1;
       },
-      accepts: function (el, source) {  // accepting form in container
+      accepts: function (el, source) {
         return source.className.indexOf('can_move') === -1;
       }
     });

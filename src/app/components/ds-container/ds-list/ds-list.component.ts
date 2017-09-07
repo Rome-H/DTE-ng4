@@ -7,7 +7,8 @@ import {DragulaService} from 'ng2-dragula';
   styleUrls: ['./ds-list.component.css']
 })
 export class DsListComponent implements OnInit {
-  public itemsDropped: Array<any> = []; // array of our dropped items
+  // array of our dropped items
+  public itemsDropped: Array<any> = [];
   constructor() {
   }
 
