@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "q9",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "../node_modules/dragula/dist/dragula.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

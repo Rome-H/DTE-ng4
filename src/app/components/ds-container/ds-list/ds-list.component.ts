@@ -7,20 +7,10 @@ import {DragulaService} from 'ng2-dragula';
   styleUrls: ['./ds-list.component.css']
 })
 export class DsListComponent implements OnInit {
-  public itemsDropped: Array<any> = [];
-  drag = false;
-
+  public itemsDropped: Array<any> = []; // array of our dropped items
   constructor() {
   }
 
   ngOnInit() {
-  }
-  public addDropItem(event) {
-    this.itemsDropped.push(event);
-  }
-
-  public dragging(event) {
-    this.drag = true;
-    console.log(this.drag);
   }
 }
