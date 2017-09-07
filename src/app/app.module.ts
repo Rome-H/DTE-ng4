@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-// App internal modules
+// App external modules
 import {DragulaModule} from 'ng2-dragula';
 
 // App internal components
