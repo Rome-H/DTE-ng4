@@ -4,10 +4,10 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class DataTableService {
-  apiUrl = 'localhost:????/api/v1/datastructures/';
+  apiUrl = 'http://localhost:5000/api/v1/datastructures/59b24e08ad590a12c494bc69';
 
   constructor(private http: HttpClient) { }
-  getTable(id: string): Observable<any>  {
-    return this.http.get(this.apiUrl + id);
+  getTable() {
+    return this.http.get(this.apiUrl);
   }
 }
