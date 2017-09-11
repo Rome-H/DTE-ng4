@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpModule} from '@angular/http';
 
-// App external modules
+// External libs
 import {DragulaModule} from 'ng2-dragula';
+import {CookieService} from 'ngx-cookie-service';
 
 // App internal components
 import { AppComponent } from './app.component';
@@ -11,6 +14,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { DsContainerComponent } from './components/ds-container/ds-container.component';
 import { DsListComponent } from './components/ds-container/ds-list/ds-list.component';
 import { DsItemComponent } from './components/ds-container/ds-item/ds-item.component';
+
+// App internal services
+import { DataTableService } from './services/data-table/data-table.service';
+import {AuthService} from './services/auth/auth.service';
+import {InterceptorService} from './services/interceptors/interceptor.service';
+
 
 
 
@@ -25,9 +34,21 @@ import { DsItemComponent } from './components/ds-container/ds-item/ds-item.compo
   ],
   imports: [
     BrowserModule,
-    DragulaModule
+    DragulaModule,
+    HttpClientModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [
+    DataTableService,
+    HttpClient,
+    CookieService,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
