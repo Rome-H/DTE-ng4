@@ -16,11 +16,13 @@ export class DsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.authService.getToken());
   this.dataTableService.getTable()// need id
       .subscribe(
         (res) => {
-          console.log(res);
+          console.log(123, res);
+          // get fields from response and put them in an array: itemsDroppred
+          this.itemsDropped = res['fields'];
+          console.log('arr', this.itemsDropped);
           },
         (err) => {
          console.error(err);

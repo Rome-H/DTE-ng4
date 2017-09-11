@@ -15,14 +15,12 @@ import 'rxjs/add/operator/map';
 // });
 
 function createResponse(body) {
-  console.log(Observable.of(
-    new Response(new ResponseOptions({body}))
-  ));
   return Observable.of(
     new Response(new ResponseOptions({ body}))
   );
 }
 
+// fake backend
 class MockHttp {
   get() {
     return createResponse([[]]);
@@ -46,6 +44,7 @@ describe('DataTableService', () => {
   service = bed.get(DataTableService);
   });
   it('should get items', () => {
+    // fake array
     const Items = [];
     spyOn(http, 'get').and.returnValue(createResponse([...Items]));
     service.getTable()

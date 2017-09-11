@@ -8,6 +8,6 @@ export class DataTableService {
 
   constructor(private http: HttpClient) { }
   getTable() {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl); // get api-request to get datastructure
   }
 }
