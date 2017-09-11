@@ -12,8 +12,11 @@ import {AuthService} from '../../../services/auth/auth.service';
 export class DsListComponent implements OnInit {
   // array of our dropped items
   public itemsDropped: Array<any> = [];
-  constructor(private dataTableService: DataTableService, private authService: AuthService) {
-  }
+
+  constructor(
+    private dataTableService: DataTableService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
   this.dataTableService.getTable()// need id
