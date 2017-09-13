@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DragulaService} from 'ng2-dragula';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'q9-form-builder',
@@ -18,7 +18,6 @@ export class FormBuilderComponent implements OnInit {
     {name: 'Time'},
     {name: 'Yes/No'}
   ];
-
   constructor(private dragulaService: DragulaService) {
     dragulaService.setOptions('form-builder-dnd', {
       // remove div when dragged off the container
