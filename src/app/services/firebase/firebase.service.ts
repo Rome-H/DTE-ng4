@@ -1,47 +1,47 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase} from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/combineLatest';
+
 import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
-import {reject} from 'q';
+
 @Injectable()
 export class FirebaseService {
 
-  firebaseToken: string;
-  firebaseDatabase: any;
+  lockValue: any;
+  lastActivity: any;
+  timeOffset: any;
 
-  rootRef: any;
   offsetObj: any;
   connectedObj: any;
   lockObj: any;
   lastActionObj: any;
+  offline: any;
 
   constructor(
     private afAuth: AngularFireAuth,
     private afDB: AngularFireDatabase
   ) { }
 
-  auth() {
 
-    return this.afAuth.auth.signInWithCustomToken(this.firebaseToken)
+
+  auth(db, token) {
+
+    return this.afAuth.auth.signInWithCustomToken(token)
       .then(() => {
         return new Promise((resolve, reject) => {
-          this.connectedObj = this.afDB.object(`${this.firebaseDatabase}/.info/connected`).$ref;
-          this.offsetObj = this.afDB.object(`${this.firebaseDatabase}/.info/serverTimeOffset`).$ref;
-          console.log('offSet:' , this.offsetObj);
-          console.log('qqqq')
-          setTimeout(() => {
-            console.log('first then');
-            resolve();
-          }, 1000
-          );
+          this.connectedObj = this.afDB.object(`${db}/.info/connected`, {preserveSnapshot: true});
+            console.log('conn', this.connectedObj);
+          this.offsetObj = this.afDB.object(`${db}/.info/serverTimeOffset`, {preserveSnapshot: true})
+              console.log('off', this.offsetObj);
+          console.log('auth');
+          resolve();
         });
-
-        // console.log('first then');
       })
       .catch((err) => {
-        reject(err);
+        console.error(err);
       });
   }
 
@@ -54,24 +54,109 @@ export class FirebaseService {
   }
 
   setRefs(dsPath) {
-    console.log(`${dsPath}/lock`)
-    this.lockObj = this.afDB.object(`${dsPath}/lock`).$ref;
-    this.lastActionObj = this.afDB.object(`${dsPath}/lastAction`).$ref;
+    return new Promise((resolve, reject) => {
+    console.log('setRefs');
+      return new Promise((resolve1, reject1) => {
+        this.lockObj = this.afDB.object(`${dsPath}/lock`, {preserveSnapshot: true});
+        resolve1();
+      })
+        .then(() => {
+          this.lastActionObj = this.afDB.object(`${dsPath}/lastAction`, {preserveSnapshot: true})
+          console.log('last', this.lastActionObj);
+          resolve();
+        });
+      });
+  }
+
+  setDSLock() {
+
+    const lockAndTime = [
+      this.lockObj,
+      this.lastActionObj,
+      this.offsetObj
+    ];
+
+    Observable.combineLatest(lockAndTime)  // wait till all subsribers are done
+      .map(([lockValue, lastActivity, timeOffset]) => {
+        this.lockValue = lockValue.val();
+        this.lastActivity = lastActivity.val();
+        this.timeOffset = timeOffset.val();
+      })
+      .subscribe(() => this.proceed());
+  }
+
+  proceed() {
+    console.log(this.lockValue, this.timeOffset, this.lastActivity)
+
+    const inactivity = Date.now() + this.timeOffset - this.lastActivity;
+
+    if (!this.lockValue || inactivity > 6000000 && !this.offline) {
+      console.log('snap1', this.lockObj);
+      // this.lockObj.onDisconnect().remove(); TODO: this remove
+      // this.lockObj.userId = user.id;  // TODO: ??
+      // this.lockObj.username = `${user.firstName} ${user.lastName}`;
+
+      // return this.lockObj.$save().then(() => this.setLastAction()); TODO: ??
+    } else {
+      throw {
+        status: 'ds_locked',
+        error: 'Data Structure Locked by another user',
+        ds_data: this.lockValue
+      };
+    }
   }
 
   listenLock() {
-    this.lockObj.off();
-    this.lockObj.on('value', snapshot => {
-      const lockVal = snapshot.val();
-      console.log(88, lockVal);
+    console.log('listenLock');
+    // this.lockObj.off(); TODO
+    // this.lockObj.on('value', snapshot => {
+    //   const lockVal = snapshot.val();
+    //   console.log('lockval', lockVal);
+      // if (!lockVal || lockVal && lockVal.userId !== Session.getUser().id) {
+      //  'fb:lock:lost';
+      // }
+    // });
+  }
+
+  checkConnected() {
+    console.log('checkConnected');
+    // this.lockObj.off(); TODO
+    // this.lockObj.on('value', snapshot => {
+    //   console.log('snaps', snapshot);
+    //   this.offline = !snapshot.val;
+    //   if (!snapshot.val()) {
+    //     // this.router.navigate(['/']); TODO: redirect
+    //     console.log('fb:connection:off');
+    //   }
+    // });
+  }
+
+  removeDSLock(sessionUser, cb) {
+  if (this.lockObj) {
+    this.lockObj.once('value', data => {
+      const user = data.val();
+      if (!user) { return cb(); }
+      if (user.userId === sessionUser.id) { this.lockObj.set(null); }
+      this.lockObj.onDisconnect().cancel();
+      cb();
     });
+  } else {
+    console.log('No lock available');
+    cb();
   }
-  setDSLock() {
-    console.log(this.lastActionObj);
-    const lockAndTime = [
-      this.lastActionObj.once('value'),
-      this.offsetObj.once('value')
-    ];
-    console.log(77, lockAndTime);
-  }
+}
+
+  setLastAction() {
+  // this.lastActionObj.$value = firebase.database.ServerValue.TIMESTAMP;  // TODO: ??
+  return this.lastActionObj.$save();
+}
+
+  listenLastUpdate() {
+  this.lastActionObj.off();
+  this.lastActionObj.on('value', snapshot => {
+    // $rootScope.$broadcast('fb:lastaction:updated', snapshot.val()); // TODO: ??
+   // this.router.navigate(['/']); TODO: redirect
+    console.log('reditrect');
+  });
+}
 }

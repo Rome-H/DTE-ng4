@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { routing } from './app-routing.module';
 
@@ -24,7 +24,11 @@ import { DataTableService } from './services/data-table/data-table.service';
 import { AuthService } from './services/auth/auth.service';
 import { InterceptorService } from './services/interceptors/interceptor.service';
 import { FirebaseService } from './services/firebase/firebase.service';
-import {firebaseConfig} from '../environments/environment';
+import { firebaseConfig } from '../environments/environment';
+import { DsContainerResolve } from './services/resolvers/ds-container.resolve';
+import { UserService } from './services/user-service/user.service';
+
+
 
 
 @NgModule({
@@ -56,7 +60,9 @@ import {firebaseConfig} from '../environments/environment';
       useClass: InterceptorService,
       multi: true
     },
-    FirebaseService
+    FirebaseService,
+    UserService,
+    DsContainerResolve
   ],
   bootstrap: [AppComponent]
 })

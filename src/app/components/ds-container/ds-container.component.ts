@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+
+import { DataTableService } from '../../services/data-table/data-table.service';
+
+import { ActivatedRoute } from '@angular/router';
+
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/pluck';
+
 
 @Component({
   selector: 'q9-ds-container',
@@ -10,23 +17,14 @@ import 'rxjs/add/operator/map';
 export class DsContainerComponent implements OnInit {
 
   editMode: any;
-
-  constructor(private router: Router) {
+  user = this.route.snapshot.data;
+  constructor(private dataTableService: DataTableService,
+              private route: ActivatedRoute) {
     // call router state
-   this.routerState();
-
+    dataTableService.editMode().subscribe((res) => this.editMode = res);
   }
 
-  ngOnInit() {}
-
-  routerState() {
-    this.router.events.subscribe((val) => {
-      const sub = val['url'];
-      if (sub.indexOf('edit') !== -1) {
-        this.editMode = true;
-      } else {
-        this.editMode = false;
-      }
-    });
+  ngOnInit() {
   }
+
 }

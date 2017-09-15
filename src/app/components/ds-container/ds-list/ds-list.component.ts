@@ -19,38 +19,8 @@ export class DsListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dataTableService.getTable()// need id
-      .subscribe(
-        (res) => {
-          console.log(123, res);
-          // get fields from response and put them in an array: itemsDroppred
-          this.itemsDropped = res['fields'];
-          this.startFireBase(res['sessionUser']['firebaseDatabase'], res['firebaseRef']['authToken'], res['firebaseRef']['dsPath']);
-          console.log('arr', this.itemsDropped);
-        },
-        (err) => {
-          console.error(err);
-        }
-      );
-  }
 
-  startFireBase(db, token, path) {
+    this.itemsDropped = this.dataTableService.$dataTable['fields'];
 
-    this.firebaseService.firebaseDatabase = db;
-    this.firebaseService.firebaseToken = token;
-
-    this.firebaseService.auth()
-      .then(() => {
-        console.log('second then');
-        return this.firebaseService.setRefs(path);
-      })
-      .then(() => {
-        console.log('third then');
-        this.firebaseService.setDSLock();
-      })
-      .then(() => {
-        console.log('fourth then');
-        this.firebaseService.listenLock();
-      });
   }
 }
