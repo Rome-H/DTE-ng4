@@ -20,7 +20,7 @@ export class DsListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.itemsDropped = this.dataTableService.$dataTable['fields'];
+    this.itemsDropped = this.dataTableService.dataTable['fields'];
 
   }
 }

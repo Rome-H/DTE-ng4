@@ -25,7 +25,7 @@ import { AuthService } from './services/auth/auth.service';
 import { InterceptorService } from './services/interceptors/interceptor.service';
 import { FirebaseService } from './services/firebase/firebase.service';
 import { firebaseConfig } from '../environments/environment';
-import { DsContainerResolve } from './services/resolvers/ds-container.resolve';
+import { AppInitResolve } from './services/resolvers/app-init.resolve';
 import { UserService } from './services/user-service/user.service';
 
 
@@ -62,7 +62,7 @@ import { UserService } from './services/user-service/user.service';
     },
     FirebaseService,
     UserService,
-    DsContainerResolve
+    AppInitResolve
   ],
   bootstrap: [AppComponent]
 })

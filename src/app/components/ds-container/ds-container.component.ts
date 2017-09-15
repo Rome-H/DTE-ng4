@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { DataTableService } from '../../services/data-table/data-table.service';
 
-import { ActivatedRoute } from '@angular/router';
-
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/pluck';
 
 
 @Component({
@@ -17,11 +14,9 @@ import 'rxjs/add/operator/pluck';
 export class DsContainerComponent implements OnInit {
 
   editMode: any;
-  user = this.route.snapshot.data;
-  constructor(private dataTableService: DataTableService,
-              private route: ActivatedRoute) {
-    // call router state
-    dataTableService.editMode().subscribe((res) => this.editMode = res);
+
+  constructor( private dataTableService: DataTableService ) {
+    dataTableService.editMode().subscribe((res) => this.editMode = res); // TODO - check why this works only in 'constructor'
   }
 
   ngOnInit() {

@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase} from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import 'rxjs/add/observable/forkJoin';
-import 'rxjs/add/observable/combineLatest';
 
+import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -13,7 +12,6 @@ export class FirebaseService {
   lockValue: any;
   lastActivity: any;
   timeOffset: any;
-
   offsetObj: any;
   connectedObj: any;
   lockObj: any;
@@ -53,7 +51,7 @@ export class FirebaseService {
     }
   }
 
-  setRefs(dsPath) {
+  setRefs(dsPath) { // TODO - use compbineLatest here
     return new Promise((resolve, reject) => {
     console.log('setRefs');
       return new Promise((resolve1, reject1) => {
@@ -69,7 +67,6 @@ export class FirebaseService {
   }
 
   setDSLock() {
-
     const lockAndTime = [
       this.lockObj,
       this.lastActionObj,

@@ -13,15 +13,16 @@ export class NavbarComponent implements OnInit {
   btnText: any;
   id: any;
   editMode: any;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private dataTableService: DataTableService) {
     // check if state is view or edit
     dataTableService.editMode()
       .subscribe((res) => {
-      this.editMode = res;
-      this.isEditMode(); // TODO: tell that it works correct only in constructur
-    });
+        this.editMode = res;
+        this.isEditMode(); // TODO: tell that it works correct only in constructur
+      });
 }
 
   ngOnInit() {

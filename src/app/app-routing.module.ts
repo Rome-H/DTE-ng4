@@ -2,14 +2,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DsContainerComponent } from './components/ds-container/ds-container.component';
 import { DsListComponent } from './components/ds-container/ds-list/ds-list.component';
-import { DsContainerResolve } from './services/resolvers/ds-container.resolve';
+import { AppInitResolve } from './services/resolvers/app-init.resolve';
 
 
 export const routes: Routes = [
   {path: ':id',
     component: DsContainerComponent,
     resolve: {
-      table: DsContainerResolve // TODO: rename maybe
+      reslove: AppInitResolve
     },
     children: [
       {path: '', component: DsListComponent},
