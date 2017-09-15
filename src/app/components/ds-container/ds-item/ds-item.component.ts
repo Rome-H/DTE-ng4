@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'q9-ds-item',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DsItemComponent implements OnInit {
 
+  @Input() name: string;
   constructor() { }
 
   ngOnInit() {
