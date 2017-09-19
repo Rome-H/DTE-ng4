@@ -19,7 +19,7 @@ export class DataTableService {
         .subscribe(res => {
           this.dataTable = res,
             console.log('data1', this.dataTable);
-          return resolve();
+          resolve();
         });
     });
   }

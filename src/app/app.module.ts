@@ -25,9 +25,11 @@ import { AuthService } from './services/auth/auth.service';
 import { InterceptorService } from './services/interceptors/interceptor.service';
 import { FirebaseService } from './services/firebase/firebase.service';
 import { firebaseConfig } from '../environments/environment';
-import { AppInitResolve } from './services/resolvers/app-init.resolve';
 import { UserService } from './services/user-service/user.service';
 
+import { AppInitResolve } from './services/resolvers/app-init.resolve';
+import { EditResolve } from './services/resolvers/edit.resolve';
+import { EditGuard } from './services/guards/edit.guard';
 
 
 
@@ -62,7 +64,9 @@ import { UserService } from './services/user-service/user.service';
     },
     FirebaseService,
     UserService,
-    AppInitResolve
+    AppInitResolve,
+    EditResolve,
+    EditGuard
   ],
   bootstrap: [AppComponent]
 })

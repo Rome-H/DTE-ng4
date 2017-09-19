@@ -48,7 +48,7 @@ describe('DataTableService', () => {
     const Items = [];
     spyOn(http, 'get').and.returnValue(createResponse([...Items]));
     service.getTable()
-      .map((res) => {
+      .then((res) => {
       console.log(res);
       });
   });

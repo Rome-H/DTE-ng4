@@ -13,4 +13,6 @@ export const firebaseConfig = {
   projectId: 'elements-c7ee4',
   storageBucket: 'elements-c7ee4.appspot.com',
   messagingSenderId: '759927297436'
-}
+};
+
+export const REMOTE_UNLOCK_TTL = 600000;

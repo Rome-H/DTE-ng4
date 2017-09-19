@@ -4,16 +4,17 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { DataTableService } from '../../services/data-table/data-table.service';
 import { FirebaseService } from '../firebase/firebase.service';
 import { UserService } from '../user-service/user.service';
+import { EditResolve } from './edit.resolve';
 
 @Injectable()
 export class AppInitResolve implements Resolve<any> {
   constructor(private dataTableService: DataTableService,
                private userService: UserService,
-               private firebaseService: FirebaseService
+               private firebaseService: FirebaseService,
+              private editResolve: EditResolve
   ) {}
 
   resolve(route: ActivatedRouteSnapshot) {
-    console.log(1);
     return this.dataTableService.getTable() // TODO: need to pass id
       .then(() => {
       // create user
@@ -26,23 +27,36 @@ export class AppInitResolve implements Resolve<any> {
        const token = res['firebaseRef']['authToken'];
        const path = res['firebaseRef']['dsPath'];
 
-        this.firebaseService.auth(db, token)
+       return this.firebaseService.auth(db, token)
           .then(() => {
-            console.log('second then');
+            console.log(1);
             return this.firebaseService.setRefs(path);
           })
           .then(() => {
-            console.log('third then');
-            return this.firebaseService.setDSLock();
+            console.log(2);
+            return this.firebaseService.checkConnected();
           })
           .then(() => {
-            console.log('fourth then');
-            return this.firebaseService.listenLock();
-          })
-         .then(() => {
-          console.log('fifth then');
-          return this.firebaseService.checkConnected();
-        });
+            console.log(3);
+            return this.firebaseService.listenLastUpdate();
+          });
+
+       // return new Promise((resolve, reject) => {
+       //   this.firebaseService.auth(db, token)
+       //     .then(() => {
+       //       console.log(1);
+       //       return this.firebaseService.setRefs(path);
+       //     })
+       //     .then(() => {
+       //       console.log(2);
+       //       return this.firebaseService.checkConnected();
+       //     })
+       //     .then(() => {
+       //       console.log(3);
+       //       return this.firebaseService.listenLastUpdate();
+       //     })
+       //     .then(() => resolve());
+       // });
       });
   }
 }

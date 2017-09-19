@@ -1,4 +1,4 @@
-export class User { // TODO - check whether 'interface' should ne implemented
+export interface User { // TODO - check whether 'interface' should ne implemented
   _id?: string;
   email?: string;
   firstName?: string;
