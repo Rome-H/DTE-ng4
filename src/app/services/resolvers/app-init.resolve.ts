@@ -36,27 +36,7 @@ export class AppInitResolve implements Resolve<any> {
             console.log(2);
             return this.firebaseService.checkConnected();
           })
-          .then(() => {
-            console.log(3);
-            return this.firebaseService.listenLastUpdate();
-          });
-
-       // return new Promise((resolve, reject) => {
-       //   this.firebaseService.auth(db, token)
-       //     .then(() => {
-       //       console.log(1);
-       //       return this.firebaseService.setRefs(path);
-       //     })
-       //     .then(() => {
-       //       console.log(2);
-       //       return this.firebaseService.checkConnected();
-       //     })
-       //     .then(() => {
-       //       console.log(3);
-       //       return this.firebaseService.listenLastUpdate();
-       //     })
-       //     .then(() => resolve());
-       // });
+         .then(() => this.firebaseService.removeSubsriptions());
       });
   }
 }

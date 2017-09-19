@@ -40,14 +40,11 @@ export class FirebaseService {
       .then(() => {
         return new Promise((resolve, reject) => {
           this.connectedObj = this.afDB.object(`${db}/.info/connected`, {preserveSnapshot: true});
+          this.offsetObj = this.afDB.object(`${db}/.info/serverTimeOffset`, {preserveSnapshot: true});
 
           // subscription on connected object
           this.connectedObjSub = this.connectedObj.subscribe();
 
-            console.log('conn', this.connectedObj);
-          this.offsetObj = this.afDB.object(`${db}/.info/serverTimeOffset`, {preserveSnapshot: true});
-              console.log('off', this.offsetObj);
-          console.log('auth');
           resolve();
         });
       })
@@ -56,7 +53,7 @@ export class FirebaseService {
       });
   }
 
-  unauth() {
+  unauth() { // TODO check how this is used
     try {
       this.afAuth.auth.signOut();
     } catch (err) {
@@ -65,47 +62,46 @@ export class FirebaseService {
   }
 
   setRefs(dsPath) {
-     console.log('setRefs');
      return new Promise((resolve, reject) => {
        this.lockObj = this.afDB.object(`${dsPath}/lock`, {preserveSnapshot: true});
+       this.lastActionObj = this.afDB.object(`${dsPath}/lastAction`, {preserveSnapshot: true});
 
        // subscription on lock object
        this.lockObjSub = this.lockObj.subscribe();
 
-       this.lastActionObj = this.afDB.object(`${dsPath}/lastAction`, {preserveSnapshot: true});
-
        // subscription on lastAction object
        this.lastActionObjSub = this.lastActionObj.subscribe();
+
        resolve();
      });
   }
 
+  removeSubsriptions() {
+    this.lockObjSub.unsubscribe();
+  }
 
   listenLock() {
-    console.log('listenLock');
     this.lockObjSub.unsubscribe();
-    this.lockObj.subscribe(snapshot => {
+    this.lockObjSub = this.lockObj.subscribe(snapshot => {
         const lockVal = snapshot.val();
         if (!lockVal || lockVal && lockVal.userId !== this.userService.user._id) {
-         console.log('fb:lock:lost');
+         console.log('fb:lock:lost'); // TODO - redirect to view mode here
          }
     });
   }
 
   checkConnected() {
-    console.log('checkConnected');
     this.connectedObjSub.unsubscribe();
     this.connectedObj.subscribe(snapshot => {
       this.offline = !snapshot.val();
         if (this.offline) {
-          // this.router.navigate(['/']); // TODO: redirect
+          // this.router.navigate(['/']); // TODO: redirect on view
           console.log('fb:connection:off');
         }
     });
   }
 
   setDSLock() {
-    console.log('setDS: ', 4);
     return new Promise((resolve, reject) => {
     const lockAndTime = [
       this.lockObj.take(1),
@@ -126,12 +122,9 @@ export class FirebaseService {
   }
 
   proceed() {
-    console.log('proceed', this.lockValue, this.lastActivity, this.timeOffset);
-
     const inactivity = Date.now() + this.timeOffset - this.lastActivity;
-    console.log(inactivity);
+
     if (!this.lockValue || inactivity > REMOTE_UNLOCK_TTL && !this.offline) {
-      console.log('snap1', this.lockObj);
       this.lockObj.$ref.onDisconnect().remove();
       const userId = this.userService.user._id;
       const userName = `${this.userService.user.firstName} ${this.userService.user.lastName}`;
@@ -145,34 +138,21 @@ export class FirebaseService {
     }
   }
 
-  removeDSLock(user, cb) {
-    console.log('remove');
+  removeDSLock(user) {
       if (this.lockObj) {
         this.lockObj.take(1).subscribe( data => {
           const user = data.val();
-          if (!user) { return cb(); }
+          if (!user) { return; }
           if (user.userId === this.userService.user._id) { this.lockObj.set(null); }
           this.lockObj.$ref.onDisconnect().cancel();
-          cb();
         });
       } else {
         console.log('No lock available');
-        cb();
       }
 }
-
+// TODO - discover all places from which last action should be updated
   setLastAction() {
    const value = firebase.database.ServerValue.TIMESTAMP;
-   console.log('time', value);
    return this.lastActionObj.set(value);
-}
-
-  listenLastUpdate() {
-  this.lastActionObjSub.unsubscribe();
-  this.lastActionObj.subscribe( snapshot => {
-   console.log('fb:lastaction:updated', snapshot.val()); // TODO: ??
-   // this.router.navigate(['/']); TODO: redirect
-    console.log('redirect');
-  });
-}
+  }
 }

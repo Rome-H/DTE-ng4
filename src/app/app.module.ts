@@ -24,12 +24,13 @@ import { DataTableService } from './services/data-table/data-table.service';
 import { AuthService } from './services/auth/auth.service';
 import { InterceptorService } from './services/interceptors/interceptor.service';
 import { FirebaseService } from './services/firebase/firebase.service';
-import { firebaseConfig } from '../environments/environment';
 import { UserService } from './services/user-service/user.service';
+
+// Environment variables
+import { firebaseConfig } from '../environments/environment';
 
 import { AppInitResolve } from './services/resolvers/app-init.resolve';
 import { EditResolve } from './services/resolvers/edit.resolve';
-import { EditGuard } from './services/guards/edit.guard';
 
 
 
@@ -65,8 +66,7 @@ import { EditGuard } from './services/guards/edit.guard';
     FirebaseService,
     UserService,
     AppInitResolve,
-    EditResolve,
-    EditGuard
+    EditResolve
   ],
   bootstrap: [AppComponent]
 })

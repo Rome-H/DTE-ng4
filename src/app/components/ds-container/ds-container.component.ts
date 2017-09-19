@@ -13,7 +13,7 @@ import 'rxjs/add/operator/filter';
 })
 export class DsContainerComponent implements OnInit {
 
-  editMode?: any;
+  editMode: any;
 
   constructor( private dataTableService: DataTableService ) {
     dataTableService.editMode().subscribe((res) => this.editMode = res); // TODO - check why this works only in 'constructor'

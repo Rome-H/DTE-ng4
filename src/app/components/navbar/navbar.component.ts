@@ -27,10 +27,9 @@ export class NavbarComponent implements OnInit {
     this.dataTableService.editMode()
       .subscribe((res) => {
         this.editMode = res;
-        console.log('mode', res);
-        this.isEditMode(); // TODO: tell that it works correct only in constructur
+        this.setBtnText(); // TODO: tell that it works correct only in constructur
       });
-}
+  }
 
   ngOnInit() {
     // Getting id for absolute path
@@ -38,24 +37,21 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  isEditMode() {
+  setBtnText() {
     // check state and set the button
     this.editMode === true ? this.btnText = 'View' : this.btnText = 'Edit';
   }
 
   changeMode() {
-    // Set button mode ok
+    // Set button mode
     if (!this.editMode) {
       this.router.navigate([`../${this.id}/edit`]);
-      this.isEditMode();
+      this.setBtnText();
     } else {
-      this.firebaseService.removeDSLock(this.userService.user, (err, data) => {
-        if (err) {
-          console.log('removeDSLock err', err);
-        }
+      this.firebaseService.removeDSLock(this.userService.user);
       this.router.navigate([`../${this.id}`]);
-      this.isEditMode();
-      });
+      this.setBtnText();
     }
   }
+
 }

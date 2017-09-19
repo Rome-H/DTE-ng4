@@ -16,7 +16,5 @@ export class UserService {
       this.user.lastName = user.lastName;
       this.user.createdAt = user.createdAt;
       this.user.userInTeam = user.userInTeam;
-
-      console.log('user:', this.user);
   }
 }
