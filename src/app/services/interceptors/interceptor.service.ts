@@ -27,7 +27,7 @@ export class InterceptorService implements HttpInterceptor {
       });
       return next.handle(request).do((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          // do stuff with response if you want
+          // do stuff with success response if you want
           console.log(event);
         }
       }, (err) => {

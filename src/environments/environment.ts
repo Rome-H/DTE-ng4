@@ -6,3 +6,13 @@
 export const environment = {
   production: false
 };
+export const firebaseConfig = {
+  apiKey: 'AIzaSyAg-ymOkZqnjLXWPLe4Go9u_4XCYnhCHY4',
+  authDomain: 'elements-c7ee4.firebaseapp.com',
+  databaseURL: 'https://elements-c7ee4.firebaseio.com',
+  projectId: 'elements-c7ee4',
+  storageBucket: 'elements-c7ee4.appspot.com',
+  messagingSenderId: '759927297436'
+};
+
+export const REMOTE_UNLOCK_TTL = 600000;

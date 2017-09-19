@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 // internal service
-import {DataTableService} from '../../../services/data-table/data-table.service';
-import {AuthService} from '../../../services/auth/auth.service';
+import { DataTableService } from '../../../services/data-table/data-table.service';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
   selector: 'q9-ds-list',
@@ -15,21 +15,12 @@ export class DsListComponent implements OnInit {
 
   constructor(
     private dataTableService: DataTableService,
-    private authService: AuthService
+    private firebaseService: FirebaseService
   ) {}
 
   ngOnInit() {
-  this.dataTableService.getTable()// need id
-      .subscribe(
-        (res) => {
-          console.log(123, res);
-          // get fields from response and put them in an array: itemsDroppred
-          this.itemsDropped = res['fields'];
-          console.log('arr', this.itemsDropped);
-          },
-        (err) => {
-         console.error(err);
-        }
-      );
+
+    this.itemsDropped = this.dataTableService.dataTable['fields'];
+
   }
 }
