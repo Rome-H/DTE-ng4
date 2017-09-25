@@ -19,4 +19,7 @@ input {
   height: 30px;
 
 }
+.dropItem:hover {
+  border: solid 2px black;
+}
 

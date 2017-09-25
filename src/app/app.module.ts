@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { routing } from './app-routing.module';
+import {FormsModule} from '@angular/forms';
 
 // External libs
 import { DragulaModule } from 'ng2-dragula';
@@ -32,6 +33,9 @@ import { firebaseConfig } from '../environments/environment';
 import { AppInitResolve } from './services/resolvers/app-init.resolve';
 import { EditResolve } from './services/resolvers/edit.resolve';
 
+import { LockGuard } from './services/guards/lock.guard';
+
+
 
 
 @NgModule({
@@ -46,6 +50,7 @@ import { EditResolve } from './services/resolvers/edit.resolve';
   imports: [
     BrowserModule,
     DragulaModule,
+    FormsModule,
     HttpClientModule,
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
@@ -66,7 +71,8 @@ import { EditResolve } from './services/resolvers/edit.resolve';
     FirebaseService,
     UserService,
     AppInitResolve,
-    EditResolve
+    EditResolve,
+    LockGuard
   ],
   bootstrap: [AppComponent]
 })

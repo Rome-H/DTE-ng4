@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DataTableService } from '../../../services/data-table/data-table.service';
 
 @Component({
   selector: 'q9-ds-item',
   templateUrl: './ds-item.component.html',
-  styleUrls: ['./ds-item.component.css']
+  styleUrls: ['./ds-item.component.css'],
 })
 export class DsItemComponent implements OnInit {
 
-  constructor() { }
+  @Input() selectedItem: any;
 
-  ngOnInit() {
+  constructor( private dataTableService: DataTableService ) {
+
   }
+  ngOnInit() {}
 
+  onEdit(val) {
+    this.dataTableService.updateFormObject(this.selectedItem.id, this.selectedItem)
+    .subscribe();
+  }
 }

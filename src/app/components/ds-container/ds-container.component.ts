@@ -16,7 +16,8 @@ export class DsContainerComponent implements OnInit {
   editMode: any;
 
   constructor( private dataTableService: DataTableService ) {
-    dataTableService.editMode().subscribe((res) => this.editMode = res); // TODO - check why this works only in 'constructor'
+    dataTableService.editMode()
+    .subscribe((res) => this.editMode = res); // TODO - check why this works only in 'constructor'
   }
 
   ngOnInit() {

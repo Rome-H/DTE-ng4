@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
@@ -15,14 +15,14 @@ import { UserService } from '../../services/user-service/user.service';
 })
 export class NavbarComponent implements OnInit {
   btnText: any;
-  id: any;
   editMode: any;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private dataTableService: DataTableService,
-              private firebaseService: FirebaseService,
-              private userService: UserService) {
+  constructor(
+    private router: Router,
+    private dataTableService: DataTableService,
+    private firebaseService: FirebaseService,
+    private userService: UserService
+  ) {
 // check if state is view or edit
     this.dataTableService.editMode()
       .subscribe((res) => {
@@ -31,11 +31,7 @@ export class NavbarComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    // Getting id for absolute path
-    this.route.params.subscribe(segments => this.id = segments.id);
-
-  }
+  ngOnInit() {}
 
   setBtnText() {
     // check state and set the button
@@ -45,12 +41,14 @@ export class NavbarComponent implements OnInit {
   changeMode() {
     // Set button mode
     if (!this.editMode) {
-      this.router.navigate([`../${this.id}/edit`]);
+      this.router.navigate([`../${this.dataTableService.id}/edit`]);
       this.setBtnText();
+      this.dataTableService.edit = true;
     } else {
       this.firebaseService.removeDSLock(this.userService.user);
-      this.router.navigate([`../${this.id}`]);
+      this.router.navigate([`../${this.dataTableService.id}`]);
       this.setBtnText();
+      this.dataTableService.edit = false;
     }
   }
 
