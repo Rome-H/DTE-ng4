@@ -16,6 +16,9 @@ div {
   width: 100px;
   float: left;
 }
+.li:hover {
+  background-color: gainsboro;
+}
 .container div {
   cursor: move;
   cursor: grab;

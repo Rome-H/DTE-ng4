@@ -10,6 +10,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../user-service/user.service';
 import { REMOTE_UNLOCK_TTL } from '../../../environments/environment';
+import { DataTableService } from '../data-table/data-table.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class FirebaseService {
@@ -23,13 +25,14 @@ export class FirebaseService {
   lastActionObj: any;
   offline: any;
   lockObjSub: any;
-  lastActionObjSub: any;
   connectedObjSub: any;
 
   constructor(
     private afAuth: AngularFireAuth,
     private afDB: AngularFireDatabase,
-    private userService: UserService
+    private userService: UserService,
+    private dataTableService: DataTableService,
+    private router: Router
   ) { }
 
 
@@ -53,7 +56,7 @@ export class FirebaseService {
       });
   }
 
-  unauth() { // TODO check how this is used
+  unauth() { // TODO check how this is used // TODO - this is unused
     try {
       this.afAuth.auth.signOut();
     } catch (err) {
@@ -69,15 +72,13 @@ export class FirebaseService {
        // subscription on lock object
        this.lockObjSub = this.lockObj.subscribe();
 
-       // subscription on lastAction object
-       this.lastActionObjSub = this.lastActionObj.subscribe();
-
        resolve();
      });
   }
 
   removeSubsriptions() {
     this.lockObjSub.unsubscribe();
+    this.connectedObjSub.unsubscribe();
   }
 
   listenLock() {
@@ -85,18 +86,19 @@ export class FirebaseService {
     this.lockObjSub = this.lockObj.subscribe(snapshot => {
         const lockVal = snapshot.val();
         if (!lockVal || lockVal && lockVal.userId !== this.userService.user._id) {
-         console.log('fb:lock:lost'); // TODO - redirect to view mode here
+         console.log('fb:lock:lost');
+          this.router.navigate([`../${this.dataTableService.id}`]);
          }
     });
   }
 
   checkConnected() {
     this.connectedObjSub.unsubscribe();
-    this.connectedObj.subscribe(snapshot => {
+    this.connectedObjSub = this.connectedObj.subscribe(snapshot => {
       this.offline = !snapshot.val();
         if (this.offline) {
-          // this.router.navigate(['/']); // TODO: redirect on view
           console.log('fb:connection:off');
+          this.router.navigate([`../${this.dataTableService.id}`]);
         }
     });
   }
@@ -130,13 +132,15 @@ export class FirebaseService {
       const userName = `${this.userService.user.firstName} ${this.userService.user.lastName}`;
       return this.lockObj.set({userId: userId, username: userName}).then(() => this.setLastAction());
     } else {
+      this.router.navigate([`../${this.dataTableService.id}`]); // TODO: ask if this is ok to redirect when lock exist
       throw {
         status: 'ds_locked',
         error: 'Data Structure Locked by another user',
-        ds_data: this.lockValue
+        ds_data: this.lockValue,
       };
     }
   }
+
 
   removeDSLock(user) {
       if (this.lockObj) {
@@ -151,7 +155,7 @@ export class FirebaseService {
       }
 }
 // TODO - discover all places from which last action should be updated
-  setLastAction() {
+  setLastAction() { // TODO it sets in dstructure-edit, so i'll do this when i'll be working on ds-edit
    const value = firebase.database.ServerValue.TIMESTAMP;
    return this.lastActionObj.set(value);
   }

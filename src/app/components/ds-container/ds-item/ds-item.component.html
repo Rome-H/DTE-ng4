@@ -1,4 +1,12 @@
 <div class="container-right">
-  Hello
+  <div>
+     <p>{{ selectedItem.name }}</p>
+  </div>
+  <div>
+    <input type="text" name="placeholder" [(ngModel)]= "selectedItem.placeholder" #placeholder="ngModel" (blur)="onEdit($event)">
+  </div>
+  <div>
+     <input type="text" name="description" [(ngModel)]= "selectedItem.description" #description="ngModel" (blur)="onEdit($event)">
+  </div>
 </div>
 

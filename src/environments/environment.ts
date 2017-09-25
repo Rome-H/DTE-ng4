@@ -7,12 +7,14 @@ export const environment = {
   production: false
 };
 export const firebaseConfig = {
-  apiKey: 'AIzaSyAg-ymOkZqnjLXWPLe4Go9u_4XCYnhCHY4',
-  authDomain: 'elements-c7ee4.firebaseapp.com',
-  databaseURL: 'https://elements-c7ee4.firebaseio.com',
-  projectId: 'elements-c7ee4',
-  storageBucket: 'elements-c7ee4.appspot.com',
-  messagingSenderId: '759927297436'
+    apiKey: 'AIzaSyCo1VwAfgxTUAL3g6aau2BXtDrmI5z8dEQ',
+    authDomain: 'myelements-51877.firebaseapp.com',
+    databaseURL: 'https://myelements-51877.firebaseio.com',
+    projectId: 'myelements-51877',
+    storageBucket: 'myelements-51877.appspot.com',
+    messagingSenderId: '489642273759'
 };
 
 export const REMOTE_UNLOCK_TTL = 600000;
+
+export const apiUrl = 'http://localhost:5000/api/v1/datastructures/';

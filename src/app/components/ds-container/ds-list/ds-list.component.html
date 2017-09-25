@@ -1,10 +1,16 @@
 <div>
   <div class='container' [dragula]='"form-builder-dnd"' [dragulaModel]='itemsDropped'>
-    <div class="dropItem" *ngFor='let text of itemsDropped'>
-      {{text.name}}
-      <input type="text">
+    <div class="dropItem"  [class.no-drag]="!editMode"
+         *ngFor='let item of itemsDropped; let i = index'
+         [attr.id]="i"
+         (mousedown)="itemDelete(item)"
+         (click)="selectItem(item)"
+    >
+      {{item.name}}
+      <input type="text" placeholder=" {{item.placeholder}}" >
+      {{item.description}}
     </div>
   </div>
 </div>
 
-<q9-ds-item></q9-ds-item>
+<q9-ds-item [hidden]="!showDsItem" [selectedItem]="selectedItem"></q9-ds-item>
