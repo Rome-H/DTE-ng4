@@ -4,7 +4,6 @@ import { DsContainerComponent } from './components/ds-container/ds-container.com
 import { DsListComponent } from './components/ds-container/ds-list/ds-list.component';
 import { AppInitResolve } from './services/resolvers/app-init.resolve';
 import { EditResolve } from './services/resolvers/edit.resolve';
-import { LockGuard } from './services/guards/lock.guard';
 
 
 
@@ -18,7 +17,6 @@ export const routes: Routes = [
     children: [
       { path: '', component: DsListComponent },
       { path: 'edit', component: DsListComponent,
-        canActivate: [LockGuard], // TODO: try to catch an error
         resolve: {
           edit: EditResolve
         },

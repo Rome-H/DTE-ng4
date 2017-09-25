@@ -1,4 +1,4 @@
-import {Component, OnInit, Output} from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 
 // internal service
 import { DataTableService } from '../../../services/data-table/data-table.service';
@@ -13,12 +13,11 @@ import 'rxjs/add/operator/take';
 })
 export class DsListComponent implements OnInit {
   // array of our dropped items
-  @Output()
-  public itemsDropped: Array<any> = [];
 
+  public itemsDropped: Array<any> = [];
   @Output()
   selectedItem = [];
-  itemToDelete: any;
+  selectedItemId: any;
   editMode: any;
   showDsItem = false;
   formObject: any;
@@ -69,13 +68,13 @@ export class DsListComponent implements OnInit {
   }
 
   delete() {
-    this.dataTableService.deleteFormObject(this.itemToDelete)
+    this.dataTableService.deleteFormObject(this.selectedItemId)
       .subscribe(() => this.showDsItem = false);
   }
 
   // get id of item we want to delete
   itemDelete(item) {
-    this.itemToDelete = item.id;
+    this.selectedItemId = item.id;
   }
 
     selectItem(item) {
@@ -85,8 +84,8 @@ export class DsListComponent implements OnInit {
 
    changeIndex() {
     for ( let i = 0; i < this.itemsDropped.length; i++ ) {
-       if (this.itemToDelete === this.itemsDropped[i].id) {
-          this.dataTableService.updateFormObjectIndex(i, this.itemToDelete)
+       if (this.selectedItemId === this.itemsDropped[i].id) {
+          this.dataTableService.updateFormObjectIndex(i, this.selectedItemId)
             .subscribe(res => console.log(res));
           }
        }

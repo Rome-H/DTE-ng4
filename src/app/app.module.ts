@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { routing } from './app-routing.module';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 // External libs
 import { DragulaModule } from 'ng2-dragula';

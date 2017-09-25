@@ -1,6 +1,6 @@
 <div class="container-right">
   <div>
-     <p>{{selectedItem.name}}</p>
+     <p>{{ selectedItem.name }}</p>
   </div>
   <div>
     <input type="text" name="placeholder" [(ngModel)]= "selectedItem.placeholder" #placeholder="ngModel" (blur)="onEdit($event)">

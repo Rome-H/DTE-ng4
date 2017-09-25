@@ -26,8 +26,6 @@ export class FormBuilderComponent implements OnInit {
     this.dataTableService.editMode()
     .subscribe((res) => {
       this.editMode = res;
-       this.move();
-      console.log(123, this.editMode);
     });
     console.log(19);
     this.editMode = this.dataTableService.edit;
@@ -47,9 +45,6 @@ export class FormBuilderComponent implements OnInit {
   }
 
   ngOnInit() {
-
-  }
-  move() {
 
   }
 }

@@ -10,6 +10,7 @@ export class DsItemComponent implements OnInit {
 
   @Input() selectedItem: any;
 
+  // TODO one way binding
   constructor( private dataTableService: DataTableService ) {
 
   }
