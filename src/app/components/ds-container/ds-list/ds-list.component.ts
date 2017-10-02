@@ -1,15 +1,16 @@
-import { Component, OnInit, Output } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 
 // internal service
 import { DataTableService } from '../../../services/data-table/data-table.service';
 import { DragulaService } from 'ng2-dragula';
 
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/first';
 
 @Component({
   selector: 'q9-ds-list',
   templateUrl: './ds-list.component.html',
-  styleUrls: ['./ds-list.component.css']
+  styleUrls: ['./ds-list.component.scss']
 })
 export class DsListComponent implements OnInit {
   // array of our dropped items
@@ -19,8 +20,10 @@ export class DsListComponent implements OnInit {
   selectedItem = [];
   selectedItemId: any;
   editMode: any;
+  @Input()
   showDsItem = false;
   formObject: any;
+  count = 1;
   constructor( private dataTableService: DataTableService,
                private dragulaService: DragulaService ) {
     this.dataTableService.editMode()
@@ -68,6 +71,7 @@ export class DsListComponent implements OnInit {
   }
 
   delete() {
+    console.log('remove2');
     this.dataTableService.deleteFormObject(this.selectedItemId)
       .subscribe(() => this.showDsItem = false);
   }
@@ -78,8 +82,13 @@ export class DsListComponent implements OnInit {
   }
 
     selectItem(item) {
-     this.selectedItem = item;
-     this.showDsItem = true;
+    if (this.selectedItem !== item) {
+      this.selectedItem = item;
+      this.showDsItem = true;
+    } else {
+      this.selectedItem = [];
+      this.showDsItem = false;
+    }
    }
 
    changeIndex() {

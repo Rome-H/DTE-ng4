@@ -5,14 +5,14 @@ import { DataTableService } from '../../../services/data-table/data-table.servic
 @Component({
   selector: 'q9-form-builder',
   templateUrl: './form-builder.component.html',
-  styleUrls: ['./form-builder.component.css']
+  styleUrls: ['./form-builder.component.scss']
 })
 export class FormBuilderComponent implements OnInit {
   // array of items to drag
   public itemsToDrop: Array<Object> = [
     {'type' : 'textInput' , 'name' : 'Text' , 'placeholder' : 'Enter text for text field' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'longTextInput' , 'name' : 'Long Text' , 'placeholder' : 'Long text' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'numInput' , 'name' : 'Number' , 'placeholder' : 'Enter value' , 'description' : 'Description displayed below field' , 'id' : 'new'},
+    {'type' : 'longTextInput' , 'name' : 'Long Text' , 'placeholder' : 'Long text' , 'description' : 'Long text' , 'id' : 'new'},
+    {'type' : 'numInput' , 'name' : 'Numbers' , 'placeholder' : 'Enter value' , 'description' : 'Description displayed below field' , 'id' : 'new'},
     {'type' : 'listInput' , 'name' : 'List' , 'placeholder' : 'Choose list items' , 'description' : 'Description displayed below field' , 'id' : 'new'},
     {'type' : 'nestedListInput' , 'name' : 'Nested List' , 'placeholder' : 'Choose list items' , 'description' : 'Description displayed below field' , 'id' : 'new'},
     {'type' : 'dateInput' , 'name' : 'Date' , 'placeholder' : 'DD MM YYY' , 'description' : 'Description displayed below field' , 'id' : 'new'},

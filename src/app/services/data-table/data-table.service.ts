@@ -7,6 +7,7 @@ import {
 
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/share';
 
 import { apiUrl } from '../../../environments/environment';
 import {Observable} from 'rxjs/Observable';
@@ -67,6 +68,6 @@ export class DataTableService {
 
 
   deleteFormObject(id): Observable<any> {
-  return this.http.delete(`${apiUrl}${this.id}/fields?dsVersion=${this.dataTable['versionDefinition']}&fieldId=${id}`);
+  return this.http.delete(`${apiUrl}${this.id}/fields?dsVersion=${this.dataTable['versionDefinition']}&fieldId=${id}`).share();
   }
 }

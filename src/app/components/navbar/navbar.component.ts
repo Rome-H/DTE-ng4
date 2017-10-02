@@ -11,11 +11,12 @@ import { UserService } from '../../services/user-service/user.service';
 @Component({
   selector: 'q9-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
   btnText: any;
   editMode: any;
+  dtName: any;
 
   constructor(
     private router: Router,
@@ -31,11 +32,13 @@ export class NavbarComponent implements OnInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  this.dtName = this.dataTableService.dataTable['name'];
+  }
 
   setBtnText() {
     // check state and set the button
-    this.editMode === true ? this.btnText = 'View' : this.btnText = 'Edit';
+    this.editMode === true ? this.btnText = 'VIEW' : this.btnText = 'EDIT';
   }
 
   changeMode() {

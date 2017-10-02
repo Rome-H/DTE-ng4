@@ -9,7 +9,7 @@ import 'rxjs/add/operator/filter';
 @Component({
   selector: 'q9-ds-container',
   templateUrl: './ds-container.component.html',
-  styleUrls: ['./ds-container.component.css']
+  styleUrls: ['./ds-container.component.scss']
 })
 export class DsContainerComponent implements OnInit {
 

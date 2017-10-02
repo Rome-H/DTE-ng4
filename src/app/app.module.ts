@@ -12,6 +12,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MdButtonModule, MatInputModule, MdInputModule, MdFormFieldModule, MdCheckboxModule} from '@angular/material';
+
 // App internal components
 import { AppComponent } from './app.component';
 import { FormBuilderComponent } from './components/ds-container/form-builder/form-builder.component';
@@ -33,7 +36,7 @@ import { firebaseConfig } from '../environments/environment';
 import { AppInitResolve } from './services/resolvers/app-init.resolve';
 import { EditResolve } from './services/resolvers/edit.resolve';
 
-import { LockGuard } from './services/guards/lock.guard';
+
 
 
 
@@ -56,7 +59,13 @@ import { LockGuard } from './services/guards/lock.guard';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    routing
+    routing,
+    BrowserAnimationsModule,
+    MdButtonModule,
+    MdInputModule,
+    MatInputModule,
+    MdFormFieldModule,
+    MdCheckboxModule
   ],
   providers: [
     DataTableService,
@@ -71,8 +80,7 @@ import { LockGuard } from './services/guards/lock.guard';
     FirebaseService,
     UserService,
     AppInitResolve,
-    EditResolve,
-    LockGuard
+    EditResolve
   ],
   bootstrap: [AppComponent]
 })

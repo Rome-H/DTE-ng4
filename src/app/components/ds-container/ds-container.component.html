@@ -1,3 +1,13 @@
-<q9-navbar></q9-navbar>
-<q9-form-builder [hidden]="!editMode"></q9-form-builder>
-<router-outlet></router-outlet>
+<div class="topper">
+  <q9-navbar class="space"></q9-navbar>
+</div>
+<div class="grid" [class.grid_open]="editMode"> <!-- block-->
+  <div class="grid__item grid__item_left"> <!-- element--> <!-- mod-->
+    <q9-form-builder></q9-form-builder>
+  </div>
+  <div class="grid__item  grid__item_right"> <!-- element--> <!-- mod-->
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
