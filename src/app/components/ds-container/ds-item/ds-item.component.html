@@ -1,12 +1,26 @@
 <div class="container-right">
-  <div>
-     <p>{{ selectedItem.name }}</p>
-  </div>
-  <div>
-    <input type="text" name="placeholder" [(ngModel)]= "selectedItem.placeholder" #placeholder="ngModel" (blur)="onEdit($event)">
-  </div>
-  <div>
-     <input type="text" name="description" [(ngModel)]= "selectedItem.description" #description="ngModel" (blur)="onEdit($event)">
+  <md-form-field class="name">
+    <div>
+      <input mdInput type="text" class="itemName" name="name" [(ngModel)]="selectedItem.name" required #name="ngModel"
+             (blur)="onEdit($event)">
+    </div>
+  </md-form-field>
+  <div class="close" (click)="hide()">X</div>
+  <div class="details">
+    <div class="field">
+      <span>Field placeholder: </span>
+      <input type="text" class="form-control" name="placeholder" [(ngModel)]="selectedItem.placeholder" #placeholder="ngModel"
+             (blur)="onEdit($event)">
+    </div>
+    <div class="field">
+      <span>Description: </span>
+      <input type="text" class="form-control" name="description" [(ngModel)]="selectedItem.description" #description="ngModel"
+             (blur)="onEdit($event)">
+    </div>
+    <div class="field">
+      <span>Required: </span>
+      <md-checkbox style="display: block">Yes</md-checkbox>
+    </div>
   </div>
 </div>
 

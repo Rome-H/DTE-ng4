@@ -1,33 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { DataTableService } from '../../../services/data-table/data-table.service';
+import { FormBuilderService } from '../../../services/form-builder/form-builder.service';
 
 @Component({
   selector: 'q9-form-builder',
   templateUrl: './form-builder.component.html',
-  styleUrls: ['./form-builder.component.css']
+  styleUrls: ['./form-builder.component.scss']
 })
 export class FormBuilderComponent implements OnInit {
-  // array of items to drag
-  public itemsToDrop: Array<Object> = [
-    {'type' : 'textInput' , 'name' : 'Text' , 'placeholder' : 'Enter text for text field' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'longTextInput' , 'name' : 'Long Text' , 'placeholder' : 'Long text' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'numInput' , 'name' : 'Number' , 'placeholder' : 'Enter value' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'listInput' , 'name' : 'List' , 'placeholder' : 'Choose list items' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'nestedListInput' , 'name' : 'Nested List' , 'placeholder' : 'Choose list items' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'dateInput' , 'name' : 'Date' , 'placeholder' : 'DD MM YYY' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'timeInput' , 'name' : 'Time' , 'placeholder' : 'HH : MM' , 'description' : 'Description displayed below field' , 'id' : 'new'},
-    {'type' : 'yesNoInput' , 'name' : 'Yes/No' , 'placeholder' : 'Enter value' , 'description' : 'Description displayed below field' , 'id' : 'new'}
-  ];
 
+  // array of items to drag
+  public itemsToDrop: Array<Object>;
   editMode = false;
+
   constructor( private dragulaService: DragulaService,
-               private dataTableService: DataTableService) {
+               private dataTableService: DataTableService,
+               private formBuilderService: FormBuilderService) {
     this.dataTableService.editMode()
     .subscribe((res) => {
       this.editMode = res;
     });
-    console.log(19);
     this.editMode = this.dataTableService.edit;
     this.dragulaService.setOptions('form-builder-dnd', {
       // remove div when dragged off the container
@@ -45,6 +38,6 @@ export class FormBuilderComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.itemsToDrop = this.formBuilderService.itemsToDrop;
   }
 }

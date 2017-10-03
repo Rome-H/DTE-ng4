@@ -1,0 +1,195 @@
+:host {
+  display: block;
+  background-color: white;
+  &.space {
+    box-sizing: border-box;
+    padding-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.index-actions {
+  border-right: 1px solid #bebebe;
+  margin: 11px 10px 0 0;
+  padding: 0 12px 0 0;
+  height: 36px;
+  line-height: 36px;
+  float: right;
+}
+
+.mode {
+  display: inline;
+
+  border-right: solid 1px gray
+}
+
+button {
+  background-color: #00abfb;
+  color: #fafafa;
+  font-size: 14px;
+}
+
+.maphead {
+  .container-fluid {
+    padding: 0;
+    height: 60px;
+  }
+
+  .q9-current-space-name {
+    background: linear-gradient(to right, #03a9f4, #fff);
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    color: white;
+    padding: 0px 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    position: fixed;
+    z-index: 13;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+
+  .current-ds-name {
+    margin: 12px 10px 0 0;
+    padding: 0 20px 0 0;
+    height: 36px;
+    line-height: 36px;
+    color: #424242;
+    font-family: "Source Sans Pro", serif;
+    font-size: 20px;
+    font-weight: 300;
+    display: block;
+  }
+
+  .navbar-fixed-top {
+    left: 0;
+    //padding-left: 105px;
+    top: 20px;
+  }
+  .current-ds-name {
+    margin: 12px 10px 0 0;
+    padding: 0 15px;
+    height: 36px;
+    line-height: 36px;
+    color: #424242;
+    font-family: "Source Sans Pro", serif;
+    font-size: 20px;
+    font-weight: 300;
+    display: inline-block;
+  }
+
+  .navbar {
+
+    display: flex;
+    height: 61px;
+    z-index: 100;
+    padding-bottom: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+    .current-space-bar {
+      width: 100%;
+      height: 24px;
+      z-index: 200;
+    }
+
+    .navbar-header {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 12px;
+      padding-left: 12px;
+      .team-icon {
+        width: 40px;
+        margin-top: -13px;
+        margin-left: 10px;
+
+      }
+    }
+    .right-nav {
+      display: flex;
+      justify-content: flex-end;
+      margin-left: auto;
+
+      .left {
+        display: inline;
+        width: 50px;
+        border-right: 1px solid #bebebe;
+        margin-right: 10px;
+        margin-top: 11px;
+        height: 36px;
+      }
+
+    }
+    .navbar-header i {
+      width: 108px;
+      margin: 23px 20px 20px 20px;
+      font-size: 14px;
+      opacity: .8;
+      font-weight: 100;
+      left: 0;
+      cursor: pointer;
+    }
+
+    .navbar-nav {
+      margin-right: 5px;
+    }
+
+    .navbar-brand {
+      padding: 0 15px 0 0;
+      height: 36px;
+      line-height: 36px;
+      color: #424242;
+      font-family: "Source Sans Pro", sans-serif;
+      font-size: 20px;
+      font-weight: 300;
+
+      &.border-right {
+        border-right: 1px solid #bebebe;
+      }
+
+      .state-name {
+        line-height: 20px;
+        padding-left: 0;
+      }
+
+      &.team-indicator {
+        width: 60px;
+        position: relative;
+        left: 10px;
+        margin-right: 0;
+        padding-right: 0;
+        height: 42px;
+
+        .icon-team {
+          cursor: default;
+          color: #337ab7;
+          left: 10px;
+          font-size: 42px !important;
+        }
+      }
+
+      .team-name {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        line-height: 15px;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: keep-all;
+        cursor: default;
+        white-space: nowrap;
+      }
+    }
+  }
+}

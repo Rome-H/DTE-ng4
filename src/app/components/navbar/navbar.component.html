@@ -1,4 +1,38 @@
-<div>
-  Elements
-  <button (click)="changeMode()">{{ btnText }}</button>
+<div class="maphead">
+  <div class="current-space-bar">
+    <div class="q9-current-space-name">
+      <span>Current space : </span>
+      <b><a href="#">{{teamNameWithDomain}}</a></b>
+    </div>
+    <nav class="navbar">
+      <aside class="nav-logo">
+        <div style="margin-top: 16px; font-size: 19px;">
+          Elements
+        </div>
+      </aside>
+      <div class="navbar-header" *ngIf="editMode">
+        <div class="navbar-brand border-right">
+          <div>
+            <span class="state-name">Edit mode</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="current-ds-name">{{ dtName }}</div>
+      <div class="right-nav  border-right">
+        <div class="left" *ngIf="editMode">
+        </div>
+        <div class="nav navbar-nav navbar-right index-actions border-right">
+          <button md-raised-button (click)="changeMode()">SWITCH TO {{ btnText }} MODE</button>
+        </div>
+        <div class="nav navbar-nav navbar-right" style="display: inline-block; width: 120px; height: 20px;">
+          <div class="dropdown">
+          </div>
+        </div>
+
+      </div>
+    </nav>
+
+
+  </div>
 </div>

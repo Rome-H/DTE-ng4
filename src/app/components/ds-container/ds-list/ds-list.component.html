@@ -1,16 +1,57 @@
-<div>
-  <div class='container' [dragula]='"form-builder-dnd"' [dragulaModel]='itemsDropped'>
-    <div class="dropItem"  [class.no-drag]="!editMode"
-         *ngFor='let item of itemsDropped; let i = index'
+<div class="ds-view-page">
+  <div class='edit-area' [dragula]='"form-builder-dnd"' [dragulaModel]='itemsDropped'>
+    <div class="dropItem" [class.no-drag]="!editMode"
+         *ngFor="let item of itemsDropped; let i = index"
+         [class.active]="selectedItem.id === item.id && showDsItem"
          [attr.id]="i"
          (mousedown)="itemDelete(item)"
          (click)="selectItem(item)"
     >
-      {{item.name}}
-      <input type="text" placeholder=" {{item.placeholder}}" >
-      {{item.description}}
+      <div class="content">
+        <label>{{item.name}}</label>
+        <textarea rows="3" *ngIf="item.type === 'longTextInput'" class="form-control"
+                  disabled>{{item.placeholder}}</textarea>
+
+        <input class="form-control"
+               [class.numbers]="item.type === 'numInput'"
+               [class.date]="item.type === 'dateInput'"
+               *ngIf="item.type === 'textInput'
+           || item.type === 'dateInput'
+           || item.type === 'numInput'"
+               type="text" placeholder=" {{item.placeholder}}" readonly
+        >
+
+        <select
+          *ngIf="item.type === 'listInput'|| item.type === 'nestedListInput'" disabled="true"
+        >
+          <option selected="selected">{{item.placeholder}}</option>
+        </select>
+
+        <!--TIME-->
+        <div class="time" *ngIf="item.type === 'timeInput'">
+          <input class="form-control"
+                 [class.time]="item.type === 'timeInput'" type="text" placeholder="{{item.placeholder}}" readonly>
+          <select [class.time-select]="item.type === 'timeInput'" class="form-control" *ngIf="item.type === 'timeInput'"
+                  disabled="true">
+            <option selected="selected">AM</option>
+          </select>
+        </div>
+
+        <!--yes/no-->
+        <div *ngIf="item.type === 'yesNoInput'" class="yes-no">
+          <div class="radio">
+            <input type="radio" value="Yes"> Yes
+          </div>
+          <div class="radio">
+            <input type="radio" value="No"> No
+          </div>
+        </div>
+
+        <p class="help-block">{{item.description}}</p>
+      </div>
     </div>
   </div>
 </div>
 
-<q9-ds-item [hidden]="!showDsItem" [selectedItem]="selectedItem"></q9-ds-item>
+<q9-ds-item class="ds-item" [class.ds-item_open]="showDsItem" [class.ds-item_close]="!showDsItem"
+            [selectedItem]="selectedItem"></q9-ds-item>

@@ -7,6 +7,7 @@ import {
 
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/share';
 
 import { apiUrl } from '../../../environments/environment';
 import {Observable} from 'rxjs/Observable';
@@ -30,7 +31,6 @@ export class DataTableService {
       this.http.get(`${apiUrl}${id}`)
         .subscribe(res => {
           this.dataTable = res;
-          console.log('dsObject', this.dataTable['versionDefinition'])
           this.id = id;   // TODO tell: this set id here because i need to use it globally in another cases
           resolve();
         });
@@ -67,6 +67,6 @@ export class DataTableService {
 
 
   deleteFormObject(id): Observable<any> {
-  return this.http.delete(`${apiUrl}${this.id}/fields?dsVersion=${this.dataTable['versionDefinition']}&fieldId=${id}`);
+  return this.http.delete(`${apiUrl}${this.id}/fields?dsVersion=${this.dataTable['versionDefinition']}&fieldId=${id}`).share();
   }
 }

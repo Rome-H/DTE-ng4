@@ -1,0 +1,45 @@
+:host {
+  font-size: 1em;
+}
+
+.wrapper {
+  min-width: 90px;
+  max-width: 90px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  min-height: calc(100vh - 81px);
+
+  .container div {
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+  }
+  .li {
+    width: 90px;
+    height: 60px;
+    text-align: center;
+    vertical-align: bottom;
+    border-bottom: solid 1px lightgray;
+    color: darkgray;
+    left: auto;
+    top: auto;
+    color: #424242;
+    opacity: 0.7;
+    padding: 8px 7px;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: 0.5px;
+    background-color: transparent;
+    outline: 0;
+
+    &:hover {
+      background-color: #eee;
+      opacity: 1;
+    }
+  }
+}
+
+

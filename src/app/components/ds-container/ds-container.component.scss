@@ -1,0 +1,35 @@
+.grid {
+  display: flex;
+  &_open {
+    position: static;
+  }
+  &__item {
+    transition: all 0.3s;
+    &_left {
+      background: white;
+      position: relative;
+      width: 0;
+
+      .grid_open & {
+        width: 93px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        height: calc(100vh - 81px);
+      }
+    }
+    &_right {
+      position: relative;
+      background-color: #fafafa;
+      width: 100%;
+      max-height: calc(100vh - 81px);
+      overflow: auto;
+      .grid_open & {
+        width: calc(100% - 90px);
+      }
+    }
+  }
+}
+
+.topper {
+  position: relative;
+  z-index: 100;
+}

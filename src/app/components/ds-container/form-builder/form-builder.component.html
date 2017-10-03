@@ -1,8 +1,12 @@
 <div class="wrapper">
   <div class='container can_move' [dragula]='"form-builder-dnd"' [dragulaModel]='itemsToDrop'>
-    <div class='li' id="a" style="left: auto; top: auto;" *ngFor='let item of itemsToDrop'>
-      <div style="height: 20px"><img src="../../../assets/a.png" width="20"></div>
-      <div>{{ item.name }}</div>
+    <div class='li' *ngFor='let item of itemsToDrop'>
+      <!--<div style="height: 20px"><img src="../../../assets/a.png" width="20"></div>-->
+      <div style="padding-top: 6px;">
+        <span>{{ item.name }}</span>
+      </div>
     </div>
   </div>
 </div>
+
+

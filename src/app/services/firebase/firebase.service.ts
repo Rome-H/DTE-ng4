@@ -77,30 +77,33 @@ export class FirebaseService {
   }
 
   removeSubsriptions() {
+    return new Promise((resolve, reject) => {
     this.lockObjSub.unsubscribe();
     this.connectedObjSub.unsubscribe();
+      resolve();
+    });
   }
 
   listenLock() {
     this.lockObjSub.unsubscribe();
     this.lockObjSub = this.lockObj.subscribe(snapshot => {
-        const lockVal = snapshot.val();
+      const lockVal = snapshot.val();
         if (!lockVal || lockVal && lockVal.userId !== this.userService.user._id) {
-         console.log('fb:lock:lost');
           this.router.navigate([`../${this.dataTableService.id}`]);
          }
     });
   }
 
   checkConnected() {
+      setTimeout(() => {
     this.connectedObjSub.unsubscribe();
     this.connectedObjSub = this.connectedObj.subscribe(snapshot => {
       this.offline = !snapshot.val();
-        if (this.offline) {
-          console.log('fb:connection:off');
+      if (!snapshot.val()) {
           this.router.navigate([`../${this.dataTableService.id}`]);
         }
     });
+      }, 400);  // TODO Tell that we need timeout
   }
 
   setDSLock() {
@@ -148,7 +151,7 @@ export class FirebaseService {
           const user = data.val();
           if (!user) { return; }
           if (user.userId === this.userService.user._id) { this.lockObj.set(null); }
-          this.lockObj.$ref.onDisconnect().cancel();
+          this.lockObj.$ref.onDisconnect().remove();
         });
       } else {
         console.log('No lock available');
