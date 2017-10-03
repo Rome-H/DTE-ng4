@@ -8,7 +8,7 @@
   }
 }
 
-.index-actions{
+.index-actions {
   border-right: 1px solid #bebebe;
   margin: 11px 10px 0 0;
   padding: 0 12px 0 0;
@@ -16,28 +16,19 @@
   line-height: 36px;
   float: right;
 }
-.mode{
-  display: inline;
 
+.mode {
+  display: inline;
 
   border-right: solid 1px gray
 }
-//.nav-logo {
-//  //display:inline-block;
-//  //border-right: 1px solid #ccc;
-//  //min-height: 61px;
-//  //max-height: 62px;
-//  //width: 91px;
-//  //color: #00abfb;
-//  //font-size: 15px;
-//  //text-align: center;
-//  //background-color: #337ab7;
-//}
-button{
+
+button {
   background-color: #00abfb;
   color: #fafafa;
   font-size: 14px;
 }
+
 .maphead {
   .container-fluid {
     padding: 0;
@@ -59,7 +50,7 @@ button{
     top: 0;
     left: 0;
     white-space: nowrap;
-    a{
+    a {
       color: #fff;
       text-decoration: underline;
       font-weight: bold;
@@ -95,14 +86,13 @@ button{
     display: inline-block;
   }
 
-.navbar {
+  .navbar {
 
-  display: flex;
-  height: 61px;
-  z-index: 100;
-  padding-bottom: 5px;
+    display: flex;
+    height: 61px;
+    z-index: 100;
+    padding-bottom: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-
 
     .current-space-bar {
       width: 100%;
@@ -127,14 +117,14 @@ button{
       justify-content: flex-end;
       margin-left: auto;
 
-    .left{
-      display: inline;
-      width: 50px;
-      border-right: 1px solid #bebebe;
-      margin-right: 10px;
-      margin-top: 11px;
-      height: 36px;
-    }
+      .left {
+        display: inline;
+        width: 50px;
+        border-right: 1px solid #bebebe;
+        margin-right: 10px;
+        margin-top: 11px;
+        height: 36px;
+      }
 
     }
     .navbar-header i {

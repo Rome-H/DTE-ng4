@@ -1,9 +1,9 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import { ISubscription } from 'rxjs/Subscription';
+import {ISubscription} from 'rxjs/Subscription';
 
 // internal service
-import { DataTableService } from '../../../services/data-table/data-table.service';
-import { DragulaService } from 'ng2-dragula';
+import {DataTableService} from '../../../services/data-table/data-table.service';
+import {DragulaService} from 'ng2-dragula';
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/first';
@@ -24,15 +24,16 @@ export class DsListComponent implements OnInit {
   editMode: any;
   formObject: any;
   dragulaSub: ISubscription;
-  constructor( private dataTableService: DataTableService,
-               private dragulaService: DragulaService ) {
+
+  constructor(private dataTableService: DataTableService,
+              private dragulaService: DragulaService) {
     this.dataTableService.editMode()
-    .subscribe((res) => {
-      this.editMode = res;
-      if (!res) {
-        this.unSub();
-      }
-    });
+      .subscribe((res) => {
+        this.editMode = res;
+        if (!res) {
+          this.unSub();
+        }
+      });
   }
 
   ngOnInit() {
@@ -64,20 +65,18 @@ export class DsListComponent implements OnInit {
     });
   }
 
-  addItems(i, formObject , item) {
-   this.dataTableService.insertFormObject(i, formObject)
-     .subscribe((res) => {
-       // saving id from dataBase for to be able to delete this object after add without refreshing the page
-       item.id = res.id;
-     });
+  addItems(i, formObject, item) {
+    this.dataTableService.insertFormObject(i, formObject)
+      .subscribe((res) => {
+        // saving id from dataBase for to be able to delete this object after add without refreshing the page
+        item.id = res.id;
+      });
   }
 
   delete(id) {
-    console.log(id);
-  if (id) {
-    // console.log(id);
-    this.dataTableService.deleteFormObject(id)
-      .subscribe(() => this.showDsItem = false);
+    if (id) {
+      this.dataTableService.deleteFormObject(id)
+        .subscribe(() => this.showDsItem = false);
     }
   }
 
@@ -86,9 +85,9 @@ export class DsListComponent implements OnInit {
     if (this.editMode) {
       this.selectedItemId = item.id;
     }
-    }
+  }
 
-    selectItem(item) {
+  selectItem(item) {
     if (this.selectedItem !== item) {
       this.selectedItem = item;
       this.showDsItem = true;
@@ -96,22 +95,22 @@ export class DsListComponent implements OnInit {
       this.selectedItem = [];
       this.showDsItem = false;
     }
-   }
+  }
 
-   changeIndex() {
-    for ( let i = 0; i < this.itemsDropped.length; i++ ) {
-       if (this.selectedItemId === this.itemsDropped[i].id) {
-          this.dataTableService.updateFormObjectIndex(i, this.selectedItemId)
-            .subscribe(res => console.log(res));
-          }
-       }
+  changeIndex() {
+    for (let i = 0; i < this.itemsDropped.length; i++) {
+      if (this.selectedItemId === this.itemsDropped[i].id) {
+        this.dataTableService.updateFormObjectIndex(i, this.selectedItemId)
+          .subscribe(res => console.log(res));
+      }
     }
-   unSub() {
+  }
+
+  unSub() {
     if (this.dragulaSub) {
-      console.log('unsub');
-    this.dragulaSub.unsubscribe();
+      this.dragulaSub.unsubscribe();
     }
-   }
+  }
 
 
 }

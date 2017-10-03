@@ -16,10 +16,9 @@ export class EditResolve implements Resolve<any> {
           console.log(5);
           return this.firebaseService.listenLock();
         });
+  }).then(() => {
+      console.log(6);
+       return this.firebaseService.checkConnected();
   });
-        // .then(() => {
-        //   console.log(6);
-        //   return this.firebaseService.checkConnected();
-        // });
   }
 }

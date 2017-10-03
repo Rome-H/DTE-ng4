@@ -12,27 +12,27 @@
       </aside>
       <div class="navbar-header" *ngIf="editMode">
         <div class="navbar-brand border-right">
-            <div>
+          <div>
             <span class="state-name">Edit mode</span>
           </div>
         </div>
       </div>
 
       <div class="current-ds-name">{{ dtName }}</div>
-    <div class="right-nav  border-right">
-      <div class="left" *ngIf="editMode">
-      </div>
-      <div class="nav navbar-nav navbar-right index-actions border-right">
-        <button md-raised-button (click)="changeMode()">SWITCH TO {{ btnText }} MODE</button>
-      </div>
-      <div class="nav navbar-nav navbar-right" style="display: inline-block; width: 120px; height: 20px;">
-      <div class="dropdown">
-      </div>
-    </div>
+      <div class="right-nav  border-right">
+        <div class="left" *ngIf="editMode">
+        </div>
+        <div class="nav navbar-nav navbar-right index-actions border-right">
+          <button md-raised-button (click)="changeMode()">SWITCH TO {{ btnText }} MODE</button>
+        </div>
+        <div class="nav navbar-nav navbar-right" style="display: inline-block; width: 120px; height: 20px;">
+          <div class="dropdown">
+          </div>
+        </div>
 
-    </div>
+      </div>
     </nav>
 
 
-</div>
+  </div>
 </div>

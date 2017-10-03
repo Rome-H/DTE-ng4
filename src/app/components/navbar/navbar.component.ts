@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
-import { DataTableService } from '../../services/data-table/data-table.service';
-import { FirebaseService } from '../../services/firebase/firebase.service';
-import { UserService } from '../../services/user-service/user.service';
+import {DataTableService} from '../../services/data-table/data-table.service';
+import {FirebaseService} from '../../services/firebase/firebase.service';
+import {UserService} from '../../services/user-service/user.service';
 
 @Component({
   selector: 'q9-navbar',
@@ -18,13 +18,12 @@ export class NavbarComponent implements OnInit {
   editMode: any;
   dtName: any;
   teamNameWithDomain: any;
+  dT: any;
 
-  constructor(
-    private router: Router,
-    private dataTableService: DataTableService,
-    private firebaseService: FirebaseService,
-    private userService: UserService
-  ) {
+  constructor(private router: Router,
+              private dataTableService: DataTableService,
+              private firebaseService: FirebaseService,
+              private userService: UserService) {
 // check if state is view or edit
     this.dataTableService.editMode()
       .subscribe((res) => {
@@ -34,8 +33,9 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.dtName = this.dataTableService.dataTable.name;
-  this.teamNameWithDomain = `${this.dataTableService.dataTable.sessionUser.userInTeam.organization.name} [${this.dataTableService.dataTable.user.enterprise.domain}]`;
+    this.dT = this.dataTableService.dataTable;
+    this.dtName = this.dT.name;
+    this.teamNameWithDomain = `${this.dT.sessionUser.userInTeam.organization.name} [${this.dT.user.enterprise.domain}]`;
   }
 
   setBtnText() {
