@@ -3,14 +3,13 @@
   &_open {
     position: static;
   }
-  &__item{
+  &__item {
     transition: all 0.3s;
     &_left {
       background: white;
       position: relative;
       width: 0;
-      //box-shadow: 0 -3px -3px rgba(0, 0, 0, 0.15);
-      //
+
       .grid_open & {
         width: 93px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);

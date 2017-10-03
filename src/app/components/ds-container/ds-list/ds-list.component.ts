@@ -54,7 +54,8 @@ export class DsListComponent implements OnInit {
     });
     // dragula event for remove the item
     this.dragulaService.remove.subscribe(() => {
-      this.delete();
+      console.log(1, this.selectedItemId)
+      this.delete(this.selectedItemId);
     });
     // dragula event for changing the index item
     this.dragulaService.dragend.subscribe(() => {
@@ -70,10 +71,11 @@ export class DsListComponent implements OnInit {
      });
   }
 
-  delete() {
-    console.log('remove2');
-    this.dataTableService.deleteFormObject(this.selectedItemId)
+  delete(id) {
+  if (id) {
+    this.dataTableService.deleteFormObject(id)
       .subscribe(() => this.showDsItem = false);
+    }
   }
 
   // get id of item we want to delete

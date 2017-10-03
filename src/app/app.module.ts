@@ -13,7 +13,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MdButtonModule, MatInputModule, MdInputModule, MdFormFieldModule, MdCheckboxModule} from '@angular/material';
+import { MdButtonModule, MatInputModule, MdInputModule, MdFormFieldModule, MdCheckboxModule } from '@angular/material';
 
 // App internal components
 import { AppComponent } from './app.component';

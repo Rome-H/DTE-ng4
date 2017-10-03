@@ -27,7 +27,6 @@ export class FormBuilderComponent implements OnInit {
     .subscribe((res) => {
       this.editMode = res;
     });
-    console.log(19);
     this.editMode = this.dataTableService.edit;
     this.dragulaService.setOptions('form-builder-dnd', {
       // remove div when dragged off the container

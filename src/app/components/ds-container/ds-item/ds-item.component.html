@@ -1,18 +1,21 @@
 <div class="container-right">
   <md-form-field class="name">
     <div>
-      <input mdInput type="text"  class="itemName" name="name"  [(ngModel)]= "selectedItem.name" required #name="ngModel" (blur)="onEdit($event)">
+      <input mdInput type="text" class="itemName" name="name" [(ngModel)]="selectedItem.name" required #name="ngModel"
+             (blur)="onEdit($event)">
     </div>
   </md-form-field>
   <div class="close" (click)="hide()">X</div>
   <div class="details">
     <div style="margin-top: 20px;">
       <span>Field placeholder: </span>
-      <input type="text" class="info" name="placeholder" [(ngModel)]= "selectedItem.placeholder" #placeholder="ngModel" (blur)="onEdit($event)">
+      <input type="text" class="info" name="placeholder" [(ngModel)]="selectedItem.placeholder" #placeholder="ngModel"
+             (blur)="onEdit($event)">
     </div>
     <div style="margin-top: 20px;">
       <span>Description: </span>
-      <input type="text" class="info" name="description" [(ngModel)]= "selectedItem.description" #description="ngModel" (blur)="onEdit($event)">
+      <input type="text" class="info" name="description" [(ngModel)]="selectedItem.description" #description="ngModel"
+             (blur)="onEdit($event)">
     </div>
     <div style="margin-top: 20px;">
       <span>Required: </span>
@@ -20,8 +23,4 @@
     </div>
   </div>
 </div>
-<!--<form class="example-form">-->
-  <!--<md-form-field class="example-full-width">-->
-    <!--<input mdInput placeholder="Favorite food" value="Sushi">-->
-  <!--</md-form-field>-->
-<!--</form>-->
+

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { DataTableService } from '../../../services/data-table/data-table.service';
 
 @Component({

@@ -2,7 +2,7 @@
   display: block;
 }
 
-.container-right{
+.container-right {
 
 }
 
@@ -15,7 +15,8 @@
 .example-full-width {
   width: 100%;
 }
-.name{
+
+.name {
   width: 91.6666666667%;
   position: relative;
   min-height: 1px;
@@ -23,6 +24,7 @@
   padding-right: 15px;
   border-bottom: none;
 }
+
 .itemName {
   display: inline-block;
   font-size: 20px;
@@ -37,6 +39,7 @@
   word-wrap: break-word;
   white-space: nowrap;
 }
+
 .info {
   width: 100%;
   color: #424242;
@@ -50,10 +53,12 @@
   line-height: 1.428571429;
   border: 1px solid #ccc;
 }
+
 .details {
   height: 100%;
-  padding:0 15px 0 15px;
+  padding: 0 15px 0 15px;
 }
+
 .close {
   display: inline;
   width: 10px;

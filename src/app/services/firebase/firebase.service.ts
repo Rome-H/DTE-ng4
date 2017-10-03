@@ -95,14 +95,14 @@ export class FirebaseService {
 
   checkConnected() {
 
-    this.connectedObjSub.unsubscribe();
-    this.connectedObjSub = this.connectedObj.subscribe(snapshot => {
-      this.offline = !snapshot.val();
-        if (this.offline) {
-          console.log('fb:connection:off');
-          this.router.navigate([`../${this.dataTableService.id}`]);
-        }
-    });
+    // this.connectedObjSub.unsubscribe();
+    // this.connectedObjSub = this.connectedObj.subscribe(snapshot => {
+    //   this.offline = !snapshot.val();
+    //   if (this.offline === true) {
+    //       console.log('fb:connection:off');
+    //       this.router.navigate([`../${this.dataTableService.id}`]);
+    //     }
+    // });
   }
 
   setDSLock() {
