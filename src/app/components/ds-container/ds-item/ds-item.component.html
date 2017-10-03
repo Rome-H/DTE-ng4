@@ -7,17 +7,17 @@
   </md-form-field>
   <div class="close" (click)="hide()">X</div>
   <div class="details">
-    <div style="margin-top: 20px;">
+    <div class="field">
       <span>Field placeholder: </span>
-      <input type="text" class="info" name="placeholder" [(ngModel)]="selectedItem.placeholder" #placeholder="ngModel"
+      <input type="text" class="form-control" name="placeholder" [(ngModel)]="selectedItem.placeholder" #placeholder="ngModel"
              (blur)="onEdit($event)">
     </div>
-    <div style="margin-top: 20px;">
+    <div class="field">
       <span>Description: </span>
-      <input type="text" class="info" name="description" [(ngModel)]="selectedItem.description" #description="ngModel"
+      <input type="text" class="form-control" name="description" [(ngModel)]="selectedItem.description" #description="ngModel"
              (blur)="onEdit($event)">
     </div>
-    <div style="margin-top: 20px;">
+    <div class="field">
       <span>Required: </span>
       <md-checkbox style="display: block">Yes</md-checkbox>
     </div>

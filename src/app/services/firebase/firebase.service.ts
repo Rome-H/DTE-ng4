@@ -77,32 +77,33 @@ export class FirebaseService {
   }
 
   removeSubsriptions() {
+    return new Promise((resolve, reject) => {
     this.lockObjSub.unsubscribe();
     this.connectedObjSub.unsubscribe();
+      resolve();
+    });
   }
 
   listenLock() {
     this.lockObjSub.unsubscribe();
     this.lockObjSub = this.lockObj.subscribe(snapshot => {
-      console.log('listen');
       const lockVal = snapshot.val();
         if (!lockVal || lockVal && lockVal.userId !== this.userService.user._id) {
-         console.log('fb:lock:lost');
           this.router.navigate([`../${this.dataTableService.id}`]);
          }
     });
   }
 
   checkConnected() {
-
-    // this.connectedObjSub.unsubscribe();
-    // this.connectedObjSub = this.connectedObj.subscribe(snapshot => {
-    //   this.offline = !snapshot.val();
-    //   if (this.offline === true) {
-    //       console.log('fb:connection:off');
-    //       this.router.navigate([`../${this.dataTableService.id}`]);
-    //     }
-    // });
+      setTimeout(() => {
+    this.connectedObjSub.unsubscribe();
+    this.connectedObjSub = this.connectedObj.subscribe(snapshot => {
+      this.offline = !snapshot.val();
+      if (!snapshot.val()) {
+          this.router.navigate([`../${this.dataTableService.id}`]);
+        }
+    });
+      }, 400);  // TODO Tell that we need timeout
   }
 
   setDSLock() {
@@ -134,7 +135,6 @@ export class FirebaseService {
       const userName = `${this.userService.user.firstName} ${this.userService.user.lastName}`;
       return this.lockObj.set({userId: userId, username: userName}).then(() => this.setLastAction());
     } else {
-      console.log('else proceed');
       this.router.navigate([`../${this.dataTableService.id}`]); // TODO: ask if this is ok to redirect when lock exist
       throw {
         status: 'ds_locked',

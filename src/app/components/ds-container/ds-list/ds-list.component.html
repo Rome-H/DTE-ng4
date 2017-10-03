@@ -2,7 +2,7 @@
   <div class='edit-area' [dragula]='"form-builder-dnd"' [dragulaModel]='itemsDropped'>
     <div class="dropItem" [class.no-drag]="!editMode"
          *ngFor="let item of itemsDropped; let i = index"
-         [class.active]="selectedItemId === item.id && showDsItem"
+         [class.active]="selectedItem.id === item.id && showDsItem"
          [attr.id]="i"
          (mousedown)="itemDelete(item)"
          (click)="selectItem(item)"
@@ -31,18 +31,18 @@
         <div class="time" *ngIf="item.type === 'timeInput'">
           <input class="form-control"
                  [class.time]="item.type === 'timeInput'" type="text" placeholder="{{item.placeholder}}" readonly>
-          <select [class.time-select]="item.type == 'timeInput'" class="form-control" *ngIf="item.type == 'timeInput'"
+          <select [class.time-select]="item.type === 'timeInput'" class="form-control" *ngIf="item.type === 'timeInput'"
                   disabled="true">
             <option selected="selected">AM</option>
           </select>
         </div>
 
         <!--yes/no-->
-        <div *ngIf="item.type === 'yesNoInput'" style="display: flex; height: 34px;">
-          <div style="width: 45px; margin-right: 5px; margin-left: 5px;">
+        <div *ngIf="item.type === 'yesNoInput'" class="yes-no">
+          <div class="radio">
             <input type="radio" value="Yes"> Yes
           </div>
-          <div style="width: 70px; margin-right: 5px;">
+          <div class="radio">
             <input type="radio" value="No"> No
           </div>
         </div>

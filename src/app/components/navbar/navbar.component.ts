@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   btnText: any;
   editMode: any;
   dtName: any;
+  teamNameWithDomain: any;
 
   constructor(
     private router: Router,
@@ -33,7 +34,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.dtName = this.dataTableService.dataTable['name'];
+  this.dtName = this.dataTableService.dataTable.name;
+  this.teamNameWithDomain = `${this.dataTableService.dataTable.sessionUser.userInTeam.organization.name} [${this.dataTableService.dataTable.user.enterprise.domain}]`;
   }
 
   setBtnText() {
@@ -54,5 +56,4 @@ export class NavbarComponent implements OnInit {
       this.dataTableService.edit = false;
     }
   }
-
 }

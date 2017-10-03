@@ -31,7 +31,6 @@ export class DataTableService {
       this.http.get(`${apiUrl}${id}`)
         .subscribe(res => {
           this.dataTable = res;
-          console.log('dsObject', this.dataTable['versionDefinition'])
           this.id = id;   // TODO tell: this set id here because i need to use it globally in another cases
           resolve();
         });

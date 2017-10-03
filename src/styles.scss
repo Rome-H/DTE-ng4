@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./assets/styles/module/navbar";
+@import "assets/styles/module/input";
 
 body {
   background-color: #fafafa;

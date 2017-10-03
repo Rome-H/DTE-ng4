@@ -1,9 +1,10 @@
 :host {
   display: block;
 }
-
 .container-right {
-
+}
+.container-right_close {
+  display: none;
 }
 
 .example-form {
@@ -40,20 +41,6 @@
   white-space: nowrap;
 }
 
-.info {
-  width: 100%;
-  color: #424242;
-  font-family: "Source Sans Pro", serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-  border-radius: 4px;
-  height: 34px;
-  padding: 6px 12px;
-  line-height: 1.428571429;
-  border: 1px solid #ccc;
-}
-
 .details {
   height: 100%;
   padding: 0 15px 0 15px;
@@ -64,4 +51,6 @@
   width: 10px;
   height: 10px;
 }
-
+.field {
+  margin-top: 20px;
+}

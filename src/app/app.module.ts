@@ -25,6 +25,7 @@ import { DsItemComponent } from './components/ds-container/ds-item/ds-item.compo
 
 // App internal services
 import { DataTableService } from './services/data-table/data-table.service';
+import { FormBuilderService } from './services/form-builder/form-builder.service';
 import { AuthService } from './services/auth/auth.service';
 import { InterceptorService } from './services/interceptors/interceptor.service';
 import { FirebaseService } from './services/firebase/firebase.service';
@@ -35,6 +36,7 @@ import { firebaseConfig } from '../environments/environment';
 
 import { AppInitResolve } from './services/resolvers/app-init.resolve';
 import { EditResolve } from './services/resolvers/edit.resolve';
+
 
 
 
@@ -69,6 +71,7 @@ import { EditResolve } from './services/resolvers/edit.resolve';
   ],
   providers: [
     DataTableService,
+    FormBuilderService,
     HttpClient,
     CookieService,
     AuthService,

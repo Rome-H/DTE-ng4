@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
+import { ISubscription } from 'rxjs/Subscription';
 
 // internal service
 import { DataTableService } from '../../../services/data-table/data-table.service';
@@ -16,25 +17,26 @@ export class DsListComponent implements OnInit {
   // array of our dropped items
 
   public itemsDropped: Array<any> = [];
-  @Output()
-  selectedItem = [];
+  @Output() selectedItem = [];
+  @Input() showDsItem = false;
+
   selectedItemId: any;
   editMode: any;
-  @Input()
-  showDsItem = false;
   formObject: any;
-  count = 1;
+  dragulaSub: ISubscription;
   constructor( private dataTableService: DataTableService,
                private dragulaService: DragulaService ) {
     this.dataTableService.editMode()
     .subscribe((res) => {
       this.editMode = res;
+      if (!res) {
+        this.unSub();
+      }
     });
   }
 
   ngOnInit() {
-    this.itemsDropped = this.dataTableService.dataTable['fields'];
-    console.log(this.itemsDropped);
+    this.itemsDropped = this.dataTableService.dataTable.fields;
     // dragula event for adding the item after drop
     this.dragulaService.dropModel.subscribe(() => {
       // loop for looking for index of new inserted item
@@ -53,8 +55,7 @@ export class DsListComponent implements OnInit {
       }
     });
     // dragula event for remove the item
-    this.dragulaService.remove.subscribe(() => {
-      console.log(1, this.selectedItemId)
+    this.dragulaSub = this.dragulaService.remove.subscribe(() => {
       this.delete(this.selectedItemId);
     });
     // dragula event for changing the index item
@@ -72,7 +73,9 @@ export class DsListComponent implements OnInit {
   }
 
   delete(id) {
+    console.log(id);
   if (id) {
+    // console.log(id);
     this.dataTableService.deleteFormObject(id)
       .subscribe(() => this.showDsItem = false);
     }
@@ -80,8 +83,10 @@ export class DsListComponent implements OnInit {
 
   // get id of item we want to delete
   itemDelete(item) {
-    this.selectedItemId = item.id;
-  }
+    if (this.editMode) {
+      this.selectedItemId = item.id;
+    }
+    }
 
     selectItem(item) {
     if (this.selectedItem !== item) {
@@ -101,4 +106,12 @@ export class DsListComponent implements OnInit {
           }
        }
     }
+   unSub() {
+    if (this.dragulaSub) {
+      console.log('unsub');
+    this.dragulaSub.unsubscribe();
+    }
+   }
+
+
 }

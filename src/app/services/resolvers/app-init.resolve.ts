@@ -36,8 +36,7 @@ export class AppInitResolve implements Resolve<any> {
             .then(() => {
               console.log(2);
               return this.firebaseService.checkConnected();
-            })
-            .then(() => this.firebaseService.removeSubsriptions());
+            });
         });
   }
 }
