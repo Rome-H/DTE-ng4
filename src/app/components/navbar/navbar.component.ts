@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
-import {DataTableService} from '../../services/data-table/data-table.service';
-import {FirebaseService} from '../../services/firebase/firebase.service';
-import {UserService} from '../../services/user-service/user.service';
+import { DataTableService } from '../../services/data-table/data-table.service';
+import { FirebaseService } from '../../services/firebase/firebase.service';
+import { UserService } from '../../services/user-service/user.service';
 
 @Component({
   selector: 'q9-navbar',

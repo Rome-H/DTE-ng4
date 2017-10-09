@@ -1,26 +1,145 @@
-<div class="container-right">
-  <md-form-field class="name">
-    <div>
-      <input mdInput type="text" class="itemName" name="name" [(ngModel)]="selectedItem.name" required #name="ngModel"
-             (blur)="onEdit($event)">
+<div [class.container-right]="showDsItem === true" [class.container-right-close]="showDsItem === false">
+  <form #form="ngForm" autocomplete="off">
+    <div class="name">
+      <input type="text" class="itemName"
+             minlength="2"
+             maxlength="20"
+             id="name"
+             name="name" [(ngModel)]="item.name"
+             (blur)="onEdit($event)"
+             [required]="true"
+             #name="ngModel"
+             [readonly]="!editMode"
+           >
+      <small *ngIf="name.errors" style="color: red;">Min 2 chars</small>
     </div>
-  </md-form-field>
   <div class="close" (click)="hide()">X</div>
+
   <div class="details">
-    <div class="field">
+    <div class="field"
+         *ngIf="selectedItem.type === 'nestedListInput'">
+      <span>Parent: </span>
+      <p>{{parentName}}</p>
+  </div>
+    <div class="field"
+         *ngIf="selectedItem.type === 'numInput'
+          || selectedItem.type === 'listInput'
+          || selectedItem.type === 'nestedListInput'
+         "
+    >
+      <span>Input option: </span>
+
+      <!--additional-->
+     <div style="display: flex; margin-top: 2px;" *ngIf="selectedItem.type === 'numInput'">
+       <div class="number">
+       <input class="form-control" type="number"
+              name="min" required="true" [(ngModel)]="item.additional.min" placeholder="Min" #min="ngModel"
+              (blur)="onEdit($event)"
+              [readonly]="!editMode">
+       </div>
+       <div class="number">
+        <input class="form-control" type="number"
+               name="max" required="true" [(ngModel)]="item.additional.max" placeholder="Max"  #max="ngModel"
+               [readonly]="!editMode"
+        (blur)="onEdit($event)"
+        >
+      </div>
+     </div>
+      <!--/additional-->
+      <!--options-->
+      <div style="margin-top: 2px; border: solid 1px #e0e0e0; border-radius: 4px; height: auto; width: 300px;padding: 10px;"
+      *ngIf="selectedItem.type === 'listInput'"
+      >
+        <div *ngFor="let item of selectedItem.options; let i = index" style="position: relative">
+        <input
+               class="option"
+               type="text"
+               name="option-{{i}}"
+               [(ngModel)]="item.value"
+               [required]="true"
+                #option="ngModel"
+               (blur)="updateOption(item)"
+               (click)="saveOldText(item)"
+        >
+          <div (click)="deleteOption(item)" style="position: absolute; right: 0; top: 0; margin: 3px 7px; cursor: pointer;">X</div>
+        </div>
+        <input class="option add-new" type="text" name="option" (blur)="onEdit($event)" placeholder="Add new option">
+      </div>
+    <!--/options-->
+
+    <!--nested options-->
+      <div style="display: flex;">
+      <div style="margin-top: 2px; border: solid 1px #e0e0e0; border-radius: 4px; height: auto; width: 300px;padding: 10px; margin-right: 10px;"
+           *ngIf="selectedItem.type === 'nestedListInput'"
+      >
+        <div *ngFor="let par of parent.options; let i = index" style="position: relative">
+          <input
+            class="option"
+            type="text"
+            name="par-option-{{i}}"
+            readonly
+            [ngModel]="par.value"
+            (click)="childOptions(par)"
+          >
+        </div>
+      </div>
+    <div style="margin-top: 2px; border: solid 1px #e0e0e0; border-radius: 4px; height: auto; width: 300px;padding: 10px;"
+         *ngIf="selectedItem.type === 'nestedListInput'"
+    >
+      <div *ngFor="let child_item of child; let i = index" style="position: relative">
+        <input
+          class="option"
+          type="text"
+          name="child-option-{{i}}"
+          [(ngModel)]="child_item.value"
+          [required]="true"
+          #child_option="ngModel"
+          (blur)="updateOption(child_item)"
+          (click)="saveOldText(child_item)"
+        >
+        <div (click)="deleteOption(child_item)" style="position: absolute; right: 0; top: 0; margin: 3px 7px; cursor: pointer;">X</div>
+      </div>
+      <input class="option add-new" type="text" name="child-option" (blur)="onEdit($event)" placeholder="Add new option">
+    </div>
+  </div>
+  </div>
+    <!--/nested options-->
+
+    <div class="field"
+         *ngIf="selectedItem.type !== 'dateInput'
+          && selectedItem.type !== 'timeInput'
+         && selectedItem.type !== 'yesNoInput'"
+    >
       <span>Field placeholder: </span>
-      <input type="text" class="form-control" name="placeholder" [(ngModel)]="selectedItem.placeholder" #placeholder="ngModel"
+      <input type="text" class="form-control"
+             minlength="2"
+             maxlength="50"
+             name="placeholder" required="true" [(ngModel)]="item.placeholder"  #placeholder="ngModel"
+             [readonly]="!editMode"
              (blur)="onEdit($event)">
+      <small *ngIf="placeholder.errors" style="color: red;">Min 2 chars</small>
     </div>
     <div class="field">
       <span>Description: </span>
-      <input type="text" class="form-control" name="description" [(ngModel)]="selectedItem.description" #description="ngModel"
+      <input type="text" class="form-control"
+             minlength="2"
+             maxlength="50"
+             name="description" required="true" [(ngModel)]="item.description" #description="ngModel"
+             [readonly]="!editMode"
              (blur)="onEdit($event)">
+      <small *ngIf="description.errors" style="color: red;">Min 2 chars</small>
     </div>
     <div class="field">
       <span>Required: </span>
-      <md-checkbox style="display: block">Yes</md-checkbox>
+      <md-checkbox type="checkbox" style="display: block"
+                   name="required"
+                   [(ngModel)]="selectedItem.required"
+                   #required="ngModel"
+                   (change)="toggle(selectedItem.required)"
+                   [disabled]="!editMode"
+      >Yes</md-checkbox>
     </div>
   </div>
+  </form>
 </div>
 

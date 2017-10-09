@@ -36,7 +36,7 @@ button {
   }
 
   .q9-current-space-name {
-    background: linear-gradient(to right, #03a9f4, #fff);
+    background: linear-gradient(to right,#7a8c95, #fff);
     width: 100%;
     height: 20px;
     line-height: 20px;
@@ -87,13 +87,12 @@ button {
   }
 
   .navbar {
-
     display: flex;
     height: 61px;
     z-index: 100;
     padding-bottom: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-
+    overflow: hidden;
     .current-space-bar {
       width: 100%;
       height: 24px;

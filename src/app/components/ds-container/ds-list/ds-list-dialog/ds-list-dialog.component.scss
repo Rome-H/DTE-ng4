@@ -1,0 +1,88 @@
+.modal-material {
+  border-radius: 20px;
+  width: 500px;
+  margin-top: 0px;
+  height: 280px;
+}
+
+.btn-local {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-bottom: 2%;
+  margin-top: 3%;
+  outline: none;
+}
+
+.modal-body-font {
+  margin-top: 10%;
+  font-size: 17px;
+  position: center;
+  text-align: center;
+}
+
+.btn-keep, .btn-remove {
+  position: center;
+  font-family: 'Overpass', sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  width: 35%;
+}
+
+.btn-keep {
+  margin-left: 14%;
+  color: #1a8383;
+  background-color: transparent;
+  border-color: #1a8383;
+}
+
+.btn-remove {
+  margin-left: 2%;
+  color: #ffffff;
+  background-color: #1a8383;
+}
+
+.close-local {
+  position: relative;
+  top: -2px;
+  margin-right: 0px;
+  float: right;
+  font-weight: bold;
+  line-height: 1;
+  font-size: 30px;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: .2;
+  cursor: pointer;
+  border-color: transparent;
+  background-color: transparent;
+  outline: none;
+}
+
+.modal-header-local {
+  background-color: #f7f7f7;
+  border-color: transparent;
+  border-radius: 5px;
+  padding: 15px;
+  width: 500px;
+}
+
+.user_name {
+  font-size: 17px;
+}

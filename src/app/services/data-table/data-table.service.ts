@@ -20,10 +20,9 @@ export class DataTableService {
   id: any;
   edit: any;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient,
+              private router: Router) {
+  }
 
   getTable(id: any) { // TODO : tell that i'm passing an id from resolve
 
@@ -31,11 +30,16 @@ export class DataTableService {
       this.http.get(`${apiUrl}${id}`)
         .subscribe(res => {
           this.dataTable = res;
+          console.log(this.dataTable);
           this.id = id;   // TODO tell: this set id here because i need to use it globally in another cases
           resolve();
         });
     });
   }
+   // get dataTable after start app
+   getData() {
+      return this.http.get(`${apiUrl}${this.id}`).share();
+   }
 
   editMode() {
     return this.router.events
@@ -43,20 +47,23 @@ export class DataTableService {
       .map((val) => (val['url'].indexOf('edit') !== -1));
   }
 
-  insertFormObject(i, formObject): Observable<any>  {
+  insertFormObject(i, formObject): Observable<any> {
     return this.http.post(`${apiUrl}${this.id}/fields`,
-      { index: i,
+      {
+        index: i,
         formObject: formObject,
         // TODO tell that in angular 1.5 it's dsObject.version definition and dsObject is res from getTable in ng4
-        dsVersion: this.dataTable['versionDefinition']});
+        dsVersion: this.dataTable['versionDefinition']
+      });
   }
 
   updateFormObject(objId, formObj): Observable<any> {
-   return this.http.put(`${apiUrl}${this.id}/fields/${objId}`, {
-     dsVersion: this.dataTable['versionDefinition'],
-     formObject: formObj
-   });
+    return this.http.put(`${apiUrl}${this.id}/fields/${objId}`, {
+      dsVersion: this.dataTable['versionDefinition'],
+      formObject: formObj
+    });
   }
+
   updateFormObjectIndex(newIndex, fieldId): Observable<any> {
     return this.http.put(`${apiUrl}${this.id}/fields`, {
       fieldId,
@@ -67,6 +74,30 @@ export class DataTableService {
 
 
   deleteFormObject(id): Observable<any> {
-  return this.http.delete(`${apiUrl}${this.id}/fields?dsVersion=${this.dataTable['versionDefinition']}&fieldId=${id}`).share();
+    return this.http.delete(`${apiUrl}${this.id}/fields?dsVersion=${this.dataTable['versionDefinition']}&fieldId=${id}`).share();
+  }
+
+  addListOption(input, option) {
+    return this.http.post(`${apiUrl}${this.id}/fields/${input.id}/options`,
+      {
+        dsVersion: this.dataTable['versionDefinition'],
+        fieldId: input.id,
+        option: option.value,
+        parentObject: input.dataStructureFieldSpecification,
+        parentOption: option.parentOption
+      });
+  }
+
+  updateListOption(input, option) {
+    console.log(option);
+    return this.http.put(`${apiUrl}${this.id}/fields/${input.id}/options/${option.id}?dsVersion=${this.dataTable['versionDefinition']}`,
+       option
+    );
+  }
+
+  removeListOption(input, optionId) {
+    return this.http.delete(`${apiUrl}${this.id}/fields/${input.id}/options/${optionId}?dsVersion=${this.dataTable['versionDefinition']}`).share();
   }
 }
+
+

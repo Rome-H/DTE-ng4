@@ -1,0 +1,10 @@
+<div style="height: 54px; background-color: #00abfb; margin-top: -19px; color: white">
+<h1 style="padding: 15px">Create nested list</h1>
+</div>
+ <select class="form-control" tabindex="1"  [(ngModel)]="data.parentId">
+   <option *ngFor="let item of items" [ngValue]="item">{{item.name}}</option>
+ </select>
+<div md-dialog-actions>
+  <button md-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+  <button md-button tabindex="2" [md-dialog-close]="data.parentId">Create</button>
+</div>

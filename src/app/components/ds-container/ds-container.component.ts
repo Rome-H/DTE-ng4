@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {DataTableService} from '../../services/data-table/data-table.service';
+import { DataTableService } from '../../services/data-table/data-table.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';

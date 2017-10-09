@@ -2,8 +2,9 @@
   display: block;
 }
 .container-right {
+  display: block;
 }
-.container-right_close {
+.container-right-close {
   display: none;
 }
 
@@ -18,27 +19,39 @@
 }
 
 .name {
+  display: inline-block;
   width: 91.6666666667%;
   position: relative;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-bottom: none;
+  min-height: 100px;
+  padding: 10px 15px 15px 15px;
+
+
 }
 
 .itemName {
-  display: inline-block;
+  width: 100%;
   font-size: 20px;
   font-weight: 300;
-  padding: 1px;
+  padding: 3px;
   border: none;
   color: #424242;
-  overflow: hidden;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
   -ms-word-wrap: break-word;
   word-wrap: break-word;
   white-space: nowrap;
+  outline: 0;
+
+  &:hover {
+    border-bottom: solid 1px #ccc;
+  }
+  &:focus{
+    border-bottom: solid 1px #03a9f4;
+  }
+  &.ng-invalid{
+    border-bottom: solid 1px red;
+  }
+
 }
 
 .details {
@@ -47,10 +60,46 @@
 }
 
 .close {
-  display: inline;
+  display: inline-block;
+  position: fixed;
   width: 10px;
   height: 10px;
+  padding: 10px;
+  cursor: pointer;
 }
 .field {
-  margin-top: 20px;
+  min-height: 83px;
+}
+.ng-invalid {
+  outline: 0;
+}
+.error {
+  color: red;
+
+}
+.number {
+  width: 80px;
+  margin-right: 30px;
+
+}
+.option {
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  border-radius: 0;
+  outline: none;
+  font-size: 14px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 30px;
+  height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &.add-new {
+    border-bottom: solid 1px #ccc;
+  }
+  &:focus{
+    border: solid 1px #03a9f4;
+  }
+
 }

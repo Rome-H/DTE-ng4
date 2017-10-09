@@ -60,7 +60,7 @@ p {
   overflow: auto;
 }
 
-.ds-item_open {
+.ds-item-open {
   width: 470px;
   position: fixed;
   right: 5px;
@@ -73,9 +73,8 @@ p {
   transition: all 0.3s;
 }
 
-.ds-item_close {
+.ds-item-close {
   width: 0;
-  visibility: hidden;
 }
 
 .edit-area {
@@ -140,4 +139,7 @@ label {
 .yes-no {
   display: flex;
   height: 34px;
+}
+input{
+
 }

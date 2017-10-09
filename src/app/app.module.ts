@@ -13,7 +13,10 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MatInputModule, MdInputModule, MdFormFieldModule, MdCheckboxModule } from '@angular/material';
+import {
+  MdButtonModule, MatInputModule, MdInputModule, MdFormFieldModule, MdCheckboxModule,
+  MdDialogModule
+} from '@angular/material';
 
 // App internal components
 import { AppComponent } from './app.component';
@@ -22,6 +25,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { DsContainerComponent } from './components/ds-container/ds-container.component';
 import { DsListComponent } from './components/ds-container/ds-list/ds-list.component';
 import { DsItemComponent } from './components/ds-container/ds-item/ds-item.component';
+import { DsListDialogComponent } from './components/ds-container/ds-list/ds-list-dialog/ds-list-dialog.component';
 
 // App internal services
 import { DataTableService } from './services/data-table/data-table.service';
@@ -43,6 +47,7 @@ import { EditResolve } from './services/resolvers/edit.resolve';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +55,8 @@ import { EditResolve } from './services/resolvers/edit.resolve';
     NavbarComponent,
     DsContainerComponent,
     DsListComponent,
-    DsItemComponent
+    DsItemComponent,
+    DsListDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,11 @@ import { EditResolve } from './services/resolvers/edit.resolve';
     MdInputModule,
     MatInputModule,
     MdFormFieldModule,
-    MdCheckboxModule
+    MdCheckboxModule,
+    MdDialogModule
+  ],
+  entryComponents: [
+    DsListDialogComponent
   ],
   providers: [
     DataTableService,
