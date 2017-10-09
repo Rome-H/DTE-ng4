@@ -1,6 +1,5 @@
 <div class="ds-view-page">
   <div class='edit-area' [dragula]='"form-builder-dnd"' [dragulaModel]='itemsDropped'>
-    {{showDsItem}}
     <div class="dropItem" [class.no-drag]="!editMode"
          *ngFor="let item of itemsDropped; let i = index"
          [class.active]="selectedItem.id === item.id && showDsItem"

@@ -3,7 +3,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ChangeDetectorRef
+  ChangeDetectorRef, NgZone
 } from '@angular/core';
 import { ISubscription } from 'rxjs/Subscription';
 
@@ -14,6 +14,7 @@ import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 import { MdDialog } from '@angular/material';
 import { DsListDialogComponent } from './ds-list-dialog/ds-list-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'q9-ds-list',
@@ -29,70 +30,53 @@ export class DsListComponent implements OnInit, OnDestroy {
   showDsItem = false;
   selectedItemId: any;
   formObject: any;
-  dragulaSub: ISubscription;
+  dragulaRemoveSub: ISubscription;
+  dragulaDropSub: ISubscription;
   addItemsub: ISubscription;
   parentId: any;
 
   constructor(private dataTableService: DataTableService,
               private dragulaService: DragulaService,
               private firebaseService: FirebaseService,
+              private route: ActivatedRoute,
               private dialog: MdDialog,
-              private cd: ChangeDetectorRef) {
+              private cd: ChangeDetectorRef,
+              private zone: NgZone) {
     this.dataTableService.editMode()
       .subscribe((res) => {
         this.editMode = res;
       });
     this.itemsDropped = this.dataTableService.dataTable.fields;
     // dragula event for adding the item after drop
-    this.dragulaService.dropModel.subscribe((res) => {
+    this.dragulaDropSub = this.dragulaService.dropModel.subscribe((res) => {
       // loop for looking for index of new inserted item
       for (let i = 0; i < this.itemsDropped.length; i++) {
         if (this.itemsDropped[i].id === 'new') {
           this.itemsDropped[i].id = '';
           // dialog box for nested list
-          if (this.itemsDropped[i].type === 'nestedListInput' ) {
+          if (this.itemsDropped[i].type === 'nestedListInput') {
             const dialogRef = this.dialog.open(DsListDialogComponent, {
               height: '184px',
               width: '300px',
               data: {parentId: this.parentId}
             });
             dialogRef.afterClosed().subscribe(result => {
-              console.log('The dialog was closed');
-              console.log(1111, result);
-              const res = result;
-              this.formObject = {
-                dataStructureFieldSpecification: res.id,
-                description: this.itemsDropped[i].description,
-                label: this.itemsDropped[i].name,
-                name: this.itemsDropped[i].type,
-                placeholder: this.itemsDropped[i].placeholder,
-                required: true
-              };
-              this.addItemsub = this.dataTableService.insertFormObject(i, this.formObject)
-                .subscribe((res) => {
-                  // saving id from dataBase for to be able to delete this object after add without refreshing the page
-                  this.itemsDropped[i] = res;
-                  this.selectItem(this.itemsDropped[i]);
-                  this.firebaseService.setLastAction();
-                });
+              if (result) {
+                const res = result;
+
+                this.fillFormObject(i, res.id);
+                this.addFormObject(i);
+
+              } else {
+                // delete nested list if cancel
+                this.itemsDropped.splice(i, 1);
+              }
             });
             // end dialog box for nested list
           } else {
-          this.formObject = {
-            description: this.itemsDropped[i].description,
-            label: this.itemsDropped[i].name,
-            name: this.itemsDropped[i].type,
-            placeholder: this.itemsDropped[i].placeholder,
-            required: true
-          };
 
-            this.addItemsub = this.dataTableService.insertFormObject(i, this.formObject)
-              .subscribe((res) => {
-                // saving id from dataBase for to be able to delete this object after add without refreshing the page
-                this.itemsDropped[i] = res;
-                this.selectItem(this.itemsDropped[i]);
-                this.firebaseService.setLastAction();
-              });
+            this.fillFormObject(i, '');
+            this.addFormObject(i);
           }
         }
         // end loop for looking for index of new inserted item
@@ -101,8 +85,15 @@ export class DsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (this.editMode) {
+        if (this.itemsDropped.length > 0) {
+      this.selectItem(this.itemsDropped[this.itemsDropped.length - 1]);
+        }
+      }
+    });
     // dragula event for remove the item
-    this.dragulaSub = this.dragulaService.remove.subscribe(() => {
+    this.dragulaRemoveSub = this.dragulaService.remove.subscribe(() => {
       this.delete(this.selectedItemId);
     });
     // dragula event for changing the index item
@@ -111,13 +102,49 @@ export class DsListComponent implements OnInit, OnDestroy {
     });
   }
 
+  fillFormObject(index, id) {
+    this.formObject = {
+      dataStructureFieldSpecification: id,
+      description: this.itemsDropped[index].description,
+      label: this.itemsDropped[index].name,
+      name: this.itemsDropped[index].type,
+      placeholder: this.itemsDropped[index].placeholder,
+      required: true
+    };
+  }
+
+  addFormObject(index) {
+    this.addItemsub = this.dataTableService.insertFormObject(index, this.formObject)
+      .subscribe((res) => {
+        // saving id from dataBase for to be able to delete this object after add without refreshing the page
+        this.itemsDropped[index] = res;
+        this.selectItem(this.itemsDropped[index]);
+        this.firebaseService.setLastAction();
+      });
+  }
+
   delete(id) {
     if (id) {
       this.dataTableService.deleteFormObject(id)
-        .subscribe(() => {
-        this.showDsItem = false
+        .subscribe((res) => {
+          const result = res;
+          if (result.length > 1) { // for list if there are nested list
+            for ( let i = 1; i < result.length; i++) {
+              this.removeFromLocalArray(result[i].id);
+            }
+          }
+          this.showDsItem = false
           this.firebaseService.setLastAction();
-      });
+        });
+    }
+  }
+
+  removeFromLocalArray(id) {
+    for (let i = 0; i < this.itemsDropped.length; i++) {
+      if (id === this.itemsDropped[i].id) {
+        this.itemsDropped.splice(i, 1);
+        break;
+      }
     }
   }
 
@@ -157,12 +184,15 @@ export class DsListComponent implements OnInit, OnDestroy {
    ngOnDestroy() {
     this.selectedItem = [];
     this.showDsItem = false;
-    if (this.dragulaSub) {
-     this.dragulaSub.unsubscribe();
+    if (this.dragulaRemoveSub) {
+     this.dragulaRemoveSub.unsubscribe();
     }
     if (this.addItemsub) {
      this.addItemsub.unsubscribe();
     }
+     if (this.dragulaDropSub) {
+     this.dragulaDropSub.unsubscribe();
+     }
    }
 
 }

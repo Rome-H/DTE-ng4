@@ -98,6 +98,10 @@ export class DataTableService {
   removeListOption(input, optionId) {
     return this.http.delete(`${apiUrl}${this.id}/fields/${input.id}/options/${optionId}?dsVersion=${this.dataTable['versionDefinition']}`).share();
   }
+
+  selectItem(){
+
+  }
 }
 
 
