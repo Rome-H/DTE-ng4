@@ -19,6 +19,8 @@ export class NavbarComponent implements OnInit {
   dtName: any;
   teamNameWithDomain: any;
   dT: any;
+  buttonDisabled: boolean;
+  lockObject: any;
 
   constructor(private router: Router,
               private dataTableService: DataTableService,
@@ -29,6 +31,7 @@ export class NavbarComponent implements OnInit {
       .subscribe((res) => {
         this.editMode = res;
         this.setBtnText(); // TODO: tell that it works correct only in constructur
+        this.lockObject = this.firebaseService['lockFlag'];
       });
   }
 
@@ -49,6 +52,7 @@ export class NavbarComponent implements OnInit {
       this.router.navigate([`../${this.dataTableService.id}/edit`]);
       this.setBtnText();
       this.dataTableService.edit = true;
+      this.lockObject.locked = true;
     } else {
       this.firebaseService.removeDSLock(this.userService.user);
       this.router.navigate([`../${this.dataTableService.id}`]);

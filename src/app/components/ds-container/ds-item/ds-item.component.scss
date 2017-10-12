@@ -22,18 +22,21 @@
   display: inline-block;
   width: 91.6666666667%;
   position: relative;
-  min-height: 100px;
+  min-height: 48px;
   padding: 10px 15px 15px 15px;
 
 
 }
 
 .itemName {
+  background-color:#fafbfb;
   width: 100%;
   font-size: 20px;
   font-weight: 300;
   padding: 3px;
   border: none;
+  border-bottom: solid 1px transparent;
+
   color: #424242;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;

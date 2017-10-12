@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireDatabase} from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 
@@ -12,10 +12,11 @@ import { UserService } from '../user-service/user.service';
 import { REMOTE_UNLOCK_TTL } from '../../../environments/environment';
 import { DataTableService } from '../data-table/data-table.service';
 import { Router } from '@angular/router';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class FirebaseService {
-
+  lockFlag: object = { locked: false };
   lockValue: any;
   lastActivity: any;
   timeOffset: any;
@@ -24,8 +25,9 @@ export class FirebaseService {
   lockObj: any;
   lastActionObj: any;
   offline: any;
-  lockObjSub: any;
-  connectedObjSub: any;
+  lockDone: boolean;
+  lockObjSub: ISubscription;
+  connectedObjSub: ISubscription;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -42,7 +44,8 @@ export class FirebaseService {
     return this.afAuth.auth.signInWithCustomToken(token)
       .then(() => {
         return new Promise((resolve, reject) => {
-          this.connectedObj = this.afDB.object(`${db}/.info/connected`, {preserveSnapshot: true});
+          const path = `${db}/.info/connected`;
+          this.connectedObj = this.afDB.object(path, {preserveSnapshot: true});
           this.offsetObj = this.afDB.object(`${db}/.info/serverTimeOffset`, {preserveSnapshot: true});
 
           // subscription on connected object
@@ -66,6 +69,7 @@ export class FirebaseService {
 
   setRefs(dsPath) {
      return new Promise((resolve, reject) => {
+       this.lockDone = false;
        this.lockObj = this.afDB.object(`${dsPath}/lock`, {preserveSnapshot: true});
        this.lastActionObj = this.afDB.object(`${dsPath}/lastAction`, {preserveSnapshot: true});
 
@@ -103,7 +107,7 @@ export class FirebaseService {
           this.router.navigate([`../${this.dataTableService.id}`]);
         }
     });
-      }, 400);  // TODO Tell that we need timeout
+      }, 1000);  // TODO Tell that we need timeout
   }
 
   setDSLock() {
@@ -133,9 +137,13 @@ export class FirebaseService {
       this.lockObj.$ref.onDisconnect().remove();
       const userId = this.userService.user._id;
       const userName = `${this.userService.user.firstName} ${this.userService.user.lastName}`;
-      return this.lockObj.set({userId: userId, username: userName}).then(() => this.setLastAction());
+      return this.lockObj.set({userId: userId, username: userName}).then(() => {
+        this.lockFlag['locked'] = false;
+        return this.setLastAction();
+      });
     } else {
       this.router.navigate([`../${this.dataTableService.id}`]); // TODO: ask if this is ok to redirect when lock exist
+      this.lockFlag['locked'] = false;
       throw {
         status: 'ds_locked',
         error: 'Data Structure Locked by another user',

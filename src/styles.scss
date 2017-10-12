@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "./assets/styles/module/navbar";
+@import "assets/styles/module/navbar";
 @import "assets/styles/module/input";
 
 body {
@@ -25,11 +25,11 @@ router-outlet {
 
 }
 
-.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+.mat-slide-toggle-checked.mat-accent .mat-slide-toggle-background, .mat-slide-toggle-indeterminate.mat-accent .mat-slide-toggle-background {
   background-color: #00abfb;
 }
 
-.mat-checkbox-ripple.mat-ripple {
+.mat-slide-toggle-ripple.mat-ripple {
   visibility: hidden;
 }
 
@@ -42,22 +42,35 @@ router-outlet {
   max-height: 120px;
   background-color: #eee;
   overflow: hidden;
+  text-align: center;
 }
 
 .gu-mirror {
-  overflow: hidden;
+  //overflow: hidden;
+  border: solid 1px #c7cfd2;
+  text-align: center;
 }
 
-div.mat-checkbox-inner-container {
-  width: 14px;
-  height: 14px;
-  border-radius: 6px;
-}
 .mat-dialog-container {
   padding: 0!important;
 }
-
-.mat-dialog-actions {
-
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: white;
 }
-
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #00abfb;
+  width: 28px;
+  height: 14px;
+  border-radius: 3px;
+}
+.mat-slide-toggle-bar {
+  width: 28px!important;
+  height: 14px;
+  border-radius: 3px!important;
+}
+.mat-slide-toggle-thumb {
+  margin-top: 4px;
+  height: 12px!important;
+  width: 12px!important;
+  border-radius: 3px!important;
+}

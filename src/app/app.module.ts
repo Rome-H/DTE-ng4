@@ -10,12 +10,17 @@ import { DragulaModule } from 'ng2-dragula';
 import { CookieService } from 'ngx-cookie-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MdButtonModule, MatInputModule, MdInputModule, MdFormFieldModule, MdCheckboxModule,
-  MdDialogModule
+  MdButtonModule,
+  MatInputModule,
+  MdInputModule,
+  MdFormFieldModule,
+  MdCheckboxModule,
+  MdDialogModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 // App internal components
@@ -74,7 +79,8 @@ import { EditResolve } from './services/resolvers/edit.resolve';
     MatInputModule,
     MdFormFieldModule,
     MdCheckboxModule,
-    MdDialogModule
+    MdDialogModule,
+    MatSlideToggleModule
   ],
   entryComponents: [
     DsListDialogComponent

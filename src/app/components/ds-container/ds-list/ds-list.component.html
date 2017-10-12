@@ -1,37 +1,41 @@
-<div class="ds-view-page">
+<div  class="ds-view-page" #autoscroll [class.open]="showDsItem" >
   <div class='edit-area' [dragula]='"form-builder-dnd"' [dragulaModel]='itemsDropped'>
     <div class="dropItem" [class.no-drag]="!editMode"
          *ngFor="let item of itemsDropped; let i = index"
-         [class.active]="selectedItem.id === item.id && showDsItem"
+         [class.active]="selectedItem['id'] === item.id && showDsItem"
          [attr.id]="i"
-         (mousedown)="itemDelete(item)"
          (click)="selectItem(item)"
+         (mousedown)="itemMoved(item)"
+         (touchstart)="itemMoved(item)"
     >
       <div class="content">
+        <div class="label">
         <label>{{item.name}}</label>
-        <textarea rows="3" *ngIf="item.type === 'longTextInput'" class="form-control"
-                  disabled>{{item.placeholder}}</textarea>
+        </div>
+        <textarea rows="3" class="its-width" *ngIf="item.type === 'longTextInput'" class="form-control"
+                  disabled>{{ item.placeholder }}</textarea>
 
         <input class="form-control"
                [class.numbers]="item.type === 'numInput'"
                [class.date]="item.type === 'dateInput'"
+               [class.its-width] = "item.type === 'textInput'"
                *ngIf="item.type === 'textInput'
            || item.type === 'dateInput'
            || item.type === 'numInput'"
-               type="text" placeholder="{{item.placeholder}}" readonly
+               type="text" placeholder="{{ item.placeholder }}" readonly
                disabled
         >
 
         <select
           *ngIf="item.type === 'listInput'|| item.type === 'nestedListInput'" disabled="true"
         >
-          <option selected="selected">{{item.placeholder}}</option>
+          <option selected="selected">{{ item.placeholder }}</option>
         </select>
 
         <!--TIME-->
         <div class="time" *ngIf="item.type === 'timeInput'">
           <input class="form-control"
-                 [class.time]="item.type === 'timeInput'" type="text" placeholder="{{item.placeholder}}" readonly disabled>
+                 [class.time]="item.type === 'timeInput'" type="text" placeholder="{{ item.placeholder }}" readonly disabled>
           <select [class.time-select]="item.type === 'timeInput'" class="form-control" *ngIf="item.type === 'timeInput'"
                   disabled="true">
             <option selected="selected">AM</option>
@@ -48,10 +52,15 @@
           </div>
         </div>
 
-        <p class="help-block">{{item.description}}</p>
+        <p class="help-block">{{ item.description }}</p>
       </div>
+      <div class="btn-remove" *ngIf="selectedItem['id'] === item.id && showDsItem">
+      <button class="btn-remove-style">
+        <label class="label-remove" (click)="itemDelete(item)">Remove</label></button>
+    </div>
     </div>
   </div>
 </div>
+
 <q9-ds-item class="ds-item" [ngClass] = "{'ds-item-open': showDsItem }"
             [selectedItem]="selectedItem" [showDsItem]="showDsItem" [editMode]="editMode" (showDsItemEvent)="recieveEvent($event)"></q9-ds-item>

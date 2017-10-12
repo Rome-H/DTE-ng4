@@ -17,4 +17,4 @@ export const firebaseConfig = {
 
 export const REMOTE_UNLOCK_TTL = 600000;
 
-export const apiUrl = 'http://localhost:5000/api/v1/datastructures/';
+export const apiUrl = 'http://192.168.3.42:5000/api/v1/datastructures/';

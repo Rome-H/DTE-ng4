@@ -3,8 +3,8 @@
 }
 
 .wrapper {
-  min-width: 90px;
-  max-width: 90px;
+  min-width: 99px;
+  max-width: 99px;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   min-height: calc(100vh - 81px);
@@ -16,8 +16,8 @@
     cursor: -webkit-grab;
   }
   .li {
-    width: 90px;
-    height: 60px;
+    width: 100px;
+    height: 62px;
     text-align: center;
     vertical-align: bottom;
     border-bottom: solid 1px lightgray;

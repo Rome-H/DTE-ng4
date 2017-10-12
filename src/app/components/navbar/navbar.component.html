@@ -14,6 +14,7 @@
         <div class="navbar-brand border-right">
           <div>
             <span class="state-name">Edit mode</span>
+            <pre>{{ lockDone }}</pre>
           </div>
         </div>
       </div>
@@ -23,7 +24,10 @@
         <div class="left" *ngIf="editMode">
         </div>
         <div class="nav navbar-nav navbar-right index-actions border-right">
-          <button md-raised-button (click)="changeMode()">SWITCH TO {{ btnText }} MODE</button>
+          <button md-raised-button (click)="changeMode()" [disabled]="lockObject.locked">
+            <div>
+              <label>SWITCH TO {{ btnText }} MODE</label>
+            </div></button>
         </div>
         <div class="nav navbar-nav navbar-right" style="display: inline-block; width: 120px; height: 20px;">
           <div class="dropdown">

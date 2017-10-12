@@ -1,11 +1,11 @@
 import {
-  Component,
+  Component, ElementRef,
   OnDestroy,
   OnInit,
-  Output,
-  ChangeDetectorRef, NgZone
+  Output, ViewChild
 } from '@angular/core';
 import { ISubscription } from 'rxjs/Subscription';
+import * as autoScroll from 'dom-autoscroller';
 
 // internal service
 import { DataTableService } from '../../../services/data-table/data-table.service';
@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'q9-ds-list',
   templateUrl: './ds-list.component.html',
-  styleUrls: ['./ds-list.component.scss']
+  styleUrls: ['./ds-list.component.scss'],
 })
 export class DsListComponent implements OnInit, OnDestroy {
   // array of our dropped items
@@ -35,13 +35,14 @@ export class DsListComponent implements OnInit, OnDestroy {
   addItemsub: ISubscription;
   parentId: any;
 
+  @ViewChild('autoscroll') autoscroll: ElementRef;
+
   constructor(private dataTableService: DataTableService,
               private dragulaService: DragulaService,
               private firebaseService: FirebaseService,
               private route: ActivatedRoute,
-              private dialog: MdDialog,
-              private cd: ChangeDetectorRef,
-              private zone: NgZone) {
+              private dialog: MdDialog
+              ) {
     this.dataTableService.editMode()
       .subscribe((res) => {
         this.editMode = res;
@@ -92,14 +93,27 @@ export class DsListComponent implements OnInit, OnDestroy {
         }
       }
     });
-    // dragula event for remove the item
-    this.dragulaRemoveSub = this.dragulaService.remove.subscribe(() => {
-      this.delete(this.selectedItemId);
-    });
     // dragula event for changing the index item
     this.dragulaService.dragend.subscribe(() => {
       this.changeIndex();
     });
+
+    setTimeout(() => {
+      const scroll = autoScroll([
+        this.autoscroll.nativeElement
+        // this.autoscroll.nativeElement,
+        // this.autoscroll2.nativeElement
+      ], {
+        margin: 100,
+        maxSpeed: 25,
+        scrollWhenOutside: true,
+        autoScroll: function(){
+          // Only scroll when the pointer is down.
+          return this.down;
+          // return true;
+        }
+      });
+    }, 0);
   }
 
   fillFormObject(index, id) {
@@ -152,10 +166,16 @@ export class DsListComponent implements OnInit, OnDestroy {
   itemDelete(item) {
     if (this.editMode) {
       this.selectedItemId = item.id;
+      this.delete(item.id);
+      this.removeFromLocalArray(item.id);
     }
   }
 
-  selectItem(item) { // TODO make like subscription
+   itemMoved(item) {
+     this.selectedItemId = item.id;
+   }
+
+  selectItem(item) {
     if (this.selectedItem['id'] !== item.id) {
       this.selectedItem = [];
       this.selectedItem = item;
@@ -184,9 +204,6 @@ export class DsListComponent implements OnInit, OnDestroy {
    ngOnDestroy() {
     this.selectedItem = [];
     this.showDsItem = false;
-    if (this.dragulaRemoveSub) {
-     this.dragulaRemoveSub.unsubscribe();
-    }
     if (this.addItemsub) {
      this.addItemsub.unsubscribe();
     }

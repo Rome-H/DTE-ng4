@@ -24,7 +24,7 @@ export class FormBuilderComponent implements OnInit {
     this.editMode = this.dataTableService.edit;
     this.dragulaService.setOptions('form-builder-dnd', {
       // remove div when dragged off the container
-      removeOnSpill: true,
+      removeOnSpill: false,
       // copy the dragged items into drop model -
       // which prevents them from being removed from the left panel
       copy: function (el, source) {

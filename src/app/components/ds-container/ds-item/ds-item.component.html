@@ -1,5 +1,6 @@
 <div [class.container-right]="showDsItem === true" [class.container-right-close]="showDsItem === false">
   <form #form="ngForm" autocomplete="off">
+    <div style="background-color: #fafbfb; margin-bottom: 35px">
     <div class="name">
       <input type="text" class="itemName"
              minlength="2"
@@ -11,10 +12,10 @@
              #name="ngModel"
              [readonly]="!editMode"
            >
-      <small *ngIf="name.errors" style="color: red;">Min 2 chars</small>
+      <small *ngIf="name.errors" style="color: red; padding: 0">Min 2 chars</small>
     </div>
   <div class="close" (click)="hide()">X</div>
-
+</div>
   <div class="details">
     <div class="field"
          *ngIf="selectedItem.type === 'nestedListInput'">
@@ -33,13 +34,13 @@
      <div style="display: flex; margin-top: 2px;" *ngIf="selectedItem.type === 'numInput'">
        <div class="number">
        <input class="form-control" type="number"
-              name="min" required="true" [(ngModel)]="item.additional.min" placeholder="Min" #min="ngModel"
+              name="min" [(ngModel)]="item.additional.min" placeholder="Min" #min="ngModel"
               (blur)="onEdit($event)"
               [readonly]="!editMode">
        </div>
        <div class="number">
         <input class="form-control" type="number"
-               name="max" required="true" [(ngModel)]="item.additional.max" placeholder="Max"  #max="ngModel"
+               name="max" [(ngModel)]="item.additional.max" placeholder="Max"  #max="ngModel"
                [readonly]="!editMode"
         (blur)="onEdit($event)"
         >
@@ -99,7 +100,9 @@
         >
         <div (click)="deleteOption(child_item)" style="position: absolute; right: 0; top: 0; margin: 3px 7px; cursor: pointer;">X</div>
       </div>
-      <input class="option add-new" type="text" name="child-option" (blur)="onEdit($event)" placeholder="Add new option">
+      <input class="option add-new" type="text" name="child-option" placeholder="Choose option" *ngIf="disableChild" disabled>
+      <input class="option add-new" type="text" *ngIf="!disableChild" name="child-option" (blur)="onEdit($event)" placeholder="Add new option" [disabled]="disableChild">
+
     </div>
   </div>
   </div>
@@ -131,13 +134,16 @@
     </div>
     <div class="field">
       <span>Required: </span>
-      <md-checkbox type="checkbox" style="display: block"
+      <div class="toggle">
+      <md-slide-toggle style="display: block"
                    name="required"
                    [(ngModel)]="selectedItem.required"
                    #required="ngModel"
-                   (change)="toggle(selectedItem.required)"
+                   [checked]="check"
+                   (change)="toggle($event)"
                    [disabled]="!editMode"
-      >Yes</md-checkbox>
+      >Yes</md-slide-toggle>
+      </div>
     </div>
   </div>
   </form>

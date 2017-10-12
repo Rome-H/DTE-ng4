@@ -21,6 +21,8 @@ export class DsItemComponent implements OnInit, OnChanges {
   parentId: any;
   parentName: any;
   child: any = [];
+  check: boolean;
+  disableChild: boolean;
 
   // TODO one way binding
   constructor(private dataTableService: DataTableService,
@@ -30,13 +32,8 @@ export class DsItemComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+
     this.item = Object.assign({}, this.selectedItem); // TODO test IE 11
-    // if (this.item['additional']['min'] === null) {
-    //   this.item['additional']['min'] = 'Min';
-    // }
-    // if (this.item.additional.max === null) {
-    //   this.item.additional.max = 'Max';
-    // }
 
     // if nested list, this loop get informatioin of parent list
     const data = this.dataTableService.dataTable.fields;
@@ -46,6 +43,8 @@ export class DsItemComponent implements OnInit, OnChanges {
         this.parentName = data[i].name;
       }
     }
+    this.disableChild = true;
+    this.child = [];
   }
 
   onEdit(val) {
@@ -125,6 +124,7 @@ export class DsItemComponent implements OnInit, OnChanges {
               // update selected item options, to see on click added child options
               this.selectedItem.options.push(res['newListOptions'][this.selectedItem.id]);
               // to see immidiately a list of child options
+              console.log(this.child);
               this.child.push(res['newListOptions'][this.selectedItem.id]);
               val.target.value = '';
               this.firebaseService.setLastAction();
@@ -133,9 +133,9 @@ export class DsItemComponent implements OnInit, OnChanges {
       }
   }
   }
- // for checkbox
-  toggle(val) {
-    this.selectedItem.required = val;
+ // for slide required
+  toggle(e: any) {
+    this.selectedItem.required = e.checked;
     this.dataTableService.updateFormObject(this.selectedItem.id, this.selectedItem)
       .subscribe( res => {
         this.firebaseService.setLastAction();
@@ -179,10 +179,11 @@ export class DsItemComponent implements OnInit, OnChanges {
 
   // show child options on click
   childOptions(par) {
+    this.disableChild = false;
     this.parentId = par.id;
     this.child = [];
-   for (let i = 0 ; i < this.item.options.length; i++ ) {
-     if (this.item.options[i].dataStructureFieldValueSpecification === par.id) {
+   for (let i = 0 ; i < this.selectedItem.options.length; i++ ) {
+     if (this.selectedItem.options[i].dataStructureFieldValueSpecification === par.id) {
        this.child.push(this.item.options[i]);
      }
    }

@@ -1,7 +1,8 @@
 <div style="height: 54px; background-color: #00abfb; margin-top: -19px; color: white">
 <h1 style="padding: 15px">Create nested list</h1>
 </div>
- <select class="form-control" tabindex="1"  [(ngModel)]="data.parentId">
+ <select class="form-control" tabindex="1" [(ngModel)]="data.parentId" name="parentList" #parentList="ngModel">
+   <option [selected]="true" disabled>Choose parent...</option>
    <option *ngFor="let item of items" [ngValue]="item">{{item.name}}</option>
  </select>
 <div md-dialog-actions>

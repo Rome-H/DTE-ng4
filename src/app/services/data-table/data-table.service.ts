@@ -99,7 +99,7 @@ export class DataTableService {
     return this.http.delete(`${apiUrl}${this.id}/fields/${input.id}/options/${optionId}?dsVersion=${this.dataTable['versionDefinition']}`).share();
   }
 
-  selectItem(){
+  selectItem() {
 
   }
 }
